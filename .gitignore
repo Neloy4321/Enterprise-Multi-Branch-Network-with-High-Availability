@@ -1,0 +1,16 @@
+﻿# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.log
+
+# EVE-NG
+*.swp
