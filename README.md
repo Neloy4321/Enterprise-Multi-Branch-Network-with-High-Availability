@@ -1,132 +1,114 @@
 <div align="center">
 
 # Enterprise Multi-Branch Network with High Availability
+
+Enterprise-grade network simulation built with **MikroTik RouterOS (CHR)** and **EVE-NG**, demonstrating scalable network design, dynamic routing, security, high availability, and centralized management across a headquarters and multiple branch offices.
+
 ![Enterprise Network Topology](topology/Enterprise-Network.png)
-
-### Enterprise Network Simulation using MikroTik CHR & EVE-NG
-
-Designing and implementing a scalable, secure, and highly available enterprise network with centralized routing, security, monitoring, and management.
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/Neloy4321/Enterprise-Multi-Branch-Network-with-High-Availability)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Neloy4321/Enterprise-Multi-Branch-Network-with-High-Availability)
 ![GitHub License](https://img.shields.io/github/license/Neloy4321/Enterprise-Multi-Branch-Network-with-High-Availability)
 ![MikroTik](https://img.shields.io/badge/MikroTik-RouterOS-blue)
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Community-green)
-![Status](https://img.shields.io/badge/Project-Completed-success)
 
 </div>
 
 ---
 
-# Table of Contents
+# Overview
 
-- Project Overview
-- Project Objectives
-- Enterprise Features
-- Network Topology
-- Technologies Used
-- Project Structure
-- Project Phases
-- Configuration Files
-- Documentation
-- Screenshots
-- Skills Demonstrated
-- Future Enhancements
-- Author
-- License
+This project simulates a real-world enterprise network consisting of one Headquarters (HQ) and two Branch Offices. It was developed in **EVE-NG** using **MikroTik CHR** to demonstrate enterprise networking concepts commonly used in production environments.
 
----
-
-# Project Overview
-
-This project demonstrates the design and implementation of a complete enterprise network infrastructure using **MikroTik RouterOS (CHR)** in **EVE-NG**.
-
-The simulated enterprise consists of one Headquarters (HQ) and two Branch Offices interconnected through dynamic routing while maintaining scalability, redundancy, centralized management, and enterprise-grade security.
-
-The project follows real-world networking practices typically used in medium and large enterprise environments.
-
----
-
-# Key Highlights
-
-- Enterprise HQ + Multi-Branch Architecture
-- Layer-2 & Layer-3 Network Design
-- Enterprise Security Policies
-- High Availability
-- Centralized Internet Access
-- Dynamic Routing
-- Centralized Logging
-- Time Synchronization
-- Professional Documentation
+The implementation focuses on scalability, redundancy, secure management, centralized services, and structured documentation while following enterprise networking best practices.
 
 ---
 
 # Project Objectives
 
-- Design a scalable enterprise network
-- Implement VLAN segmentation
-- Configure Inter-VLAN Routing
-- Deploy OSPF Multi-Area Routing
-- Implement DHCP
-- Configure NAT
-- Secure the network using ACL
-- Deploy VRRP High Availability
-- Secure Remote Management using SSH
-- Configure Centralized Syslog
-- Configure NTP
-- Produce professional project documentation
+- Build a scalable enterprise network architecture
+- Segment departments using VLANs
+- Enable communication through Inter-VLAN Routing
+- Deploy dynamic routing using OSPF Multi-Area
+- Automate IP allocation with DHCP
+- Provide centralized Internet access using NAT
+- Implement enterprise firewall policies
+- Eliminate gateway single points of failure using VRRP
+- Secure device management with SSH
+- Centralize logging using Syslog
+- Synchronize network devices using NTP
 
 ---
 
 # Enterprise Features
 
 | Feature | Status |
-|----------|:------:|
-| VLAN | ✅ |
+|---------|:------:|
+| VLAN Segmentation | ✅ |
 | Inter-VLAN Routing | ✅ |
-| OSPF Multi-Area | ✅ |
+| OSPF Multi-Area Routing | ✅ |
 | DHCP | ✅ |
-| NAT | ✅ |
-| ACL / Firewall | ✅ |
-| VRRP | ✅ |
-| SSH | ✅ |
-| Syslog | ✅ |
-| NTP | ✅ |
+| NAT (Masquerade) | ✅ |
+| Firewall / ACL | ✅ |
+| VRRP High Availability | ✅ |
+| SSH Management | ✅ |
+| Centralized Syslog | ✅ |
+| Network Time Protocol (NTP) | ✅ |
 
 ---
 
-# Network Topology
+# Network Architecture
 
-> **Topology Diagram**
+## Headquarters
 
-<p align="center">
+- HQ-R1
+- HQ-R2
+- CORE-SW1
+- CORE-SW2
 
-<img src="assets/topology.png" width="900">
+Departments
 
-</p>
+- HR
+- Sales
+- IT
+- Management
 
 ---
 
-# Technologies Used
+## Branch Offices
+
+### Branch-1
+
+- BR1-R1
+- BR1-SW1
+
+### Branch-2
+
+- BR2-R1
+- BR2-SW1
+
+---
+
+# Technologies
 
 | Category | Technology |
-|------------|----------------|
+|-----------|------------|
 | Network Emulator | EVE-NG Community Edition |
 | Router OS | MikroTik CHR |
-| Routing | OSPF Multi-Area |
-| Layer-2 | VLAN |
-| Layer-3 | Inter-VLAN Routing |
+| Layer 2 | VLAN |
+| Layer 3 | Inter-VLAN Routing |
+| Dynamic Routing | OSPF Multi-Area |
 | Services | DHCP |
 | Internet | NAT |
-| Security | Firewall (ACL) |
+| Security | Firewall / ACL |
 | High Availability | VRRP |
 | Remote Management | SSH |
 | Monitoring | Syslog |
-| Time Sync | NTP |
+| Time Synchronization | NTP |
 
 ---
 
-# Repository Structure
+# Project Structure
 
 ```text
 Enterprise-Multi-Branch-Network-with-High-Availability
@@ -148,68 +130,74 @@ Enterprise-Multi-Branch-Network-with-High-Availability
 # Project Phases
 
 | Phase | Description |
-|--------|-------------|
-| Phase 0 | Environment Setup |
-| Phase 1 | Network Planning |
-| Phase 2 | Infrastructure Deployment |
-| Phase 3 | VLAN |
-| Phase 4 | Inter-VLAN Routing |
-| Phase 5 | DHCP |
-| Phase 6 | OSPF |
-| Phase 7 | NAT |
-| Phase 8 | ACL |
-| Phase 9 | VRRP |
-| Phase 10 | SSH |
-| Phase 11 | Syslog |
-| Phase 12 | NTP |
+|---------|-------------|
+| Phase 00 | Environment Setup |
+| Phase 01 | Network Planning & IP Addressing |
+| Phase 02 | Infrastructure Deployment |
+| Phase 03 | VLAN Configuration |
+| Phase 04 | Inter-VLAN Routing |
+| Phase 05 | DHCP Deployment |
+| Phase 06 | OSPF Multi-Area Routing |
+| Phase 07 | NAT & Internet Connectivity |
+| Phase 08 | Firewall & ACL |
+| Phase 09 | VRRP High Availability |
+| Phase 10 | SSH Remote Management |
+| Phase 11 | Centralized Syslog |
+| Phase 12 | Network Time Protocol (NTP) |
 
 ---
 
-# Configuration Files
+# Repository Contents
 
-Configuration backups are organized inside the **configs** directory.
+## Documentation
+
+The **docs/** directory contains detailed phase-by-phase implementation notes, including:
+
+- Objectives
+- Design Decisions
+- Configuration
+- Verification
+- Troubleshooting
+- Results
+
+---
+
+## Configuration Files
+
+The **configs/** directory contains RouterOS configuration exports for all routers and switches.
+
+Devices include:
 
 - HQ-R1
 - HQ-R2
-- BR1-R1
-- BR2-R1
 - CORE-SW1
 - CORE-SW2
+- BR1-R1
 - BR1-SW1
+- BR2-R1
 - BR2-SW1
 
 ---
 
-# Documentation
+## Topology
 
-Every implementation phase includes:
+The **topology/** directory contains:
 
-- Objectives
-- Network Design
-- Configuration
-- Verification
-- Testing
-- Challenges
-- Results
-- Deliverables
+- Enterprise Network Diagram (.drawio)
+- PNG Export
+- PDF Version
 
 ---
 
-# Project Gallery
+## Screenshots
 
-The **images/** directory contains screenshots for every phase.
+Screenshots are organized by implementation phase inside the **images/** directory.
 
-- Environment Setup
-- VLAN
-- Inter-VLAN
-- DHCP
-- OSPF
-- NAT
-- ACL
-- VRRP
-- SSH
-- Syslog
-- NTP
+---
+
+## Lab Files
+
+The complete EVE-NG lab file is available inside the **lab/** directory.
 
 ---
 
@@ -218,13 +206,12 @@ The **images/** directory contains screenshots for every phase.
 - Enterprise Network Design
 - MikroTik RouterOS
 - EVE-NG
-- VLAN Design
-- Layer-2 Switching
-- Layer-3 Routing
-- OSPF
+- VLAN Implementation
+- Inter-VLAN Routing
+- OSPF Multi-Area
 - DHCP
 - NAT
-- ACL
+- Firewall & ACL
 - VRRP
 - SSH
 - Syslog
@@ -234,16 +221,18 @@ The **images/** directory contains screenshots for every phase.
 
 ---
 
-# Future Enhancements
+# Future Improvements
+
+Possible future enhancements include:
 
 - IPv6
 - BGP
 - MPLS
-- Site-to-Site VPN
 - WireGuard VPN
+- Site-to-Site VPN
 - Zabbix Monitoring
 - The Dude
-- Ansible Automation
+- Network Automation using Ansible
 
 ---
 
@@ -251,9 +240,7 @@ The **images/** directory contains screenshots for every phase.
 
 **Neloy Pramanik Supto**
 
-GitHub
-
-https://github.com/Neloy4321
+GitHub: https://github.com/Neloy4321
 
 ---
 
