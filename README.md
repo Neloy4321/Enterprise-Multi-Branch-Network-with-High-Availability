@@ -1,6 +1,7 @@
 <div align="center">
 
 # Enterprise Multi-Branch Network with High Availability
+![Enterprise Network Topology](topology/Enterprise-Network.png)
 
 ### Enterprise Network Simulation using MikroTik CHR & EVE-NG
 
