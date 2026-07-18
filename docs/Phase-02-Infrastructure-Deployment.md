@@ -1,173 +1,132 @@
-# Phase 02 – Infrastructure Deployment
+# 🚀 Phase 02 – Infrastructure Deployment & Topology Composition
 
-## Objective
-
-The objective of this phase was to deploy the enterprise network infrastructure inside the EVE-NG virtual environment. This included creating the network topology, deploying all required virtual devices, establishing physical connections, and verifying that the laboratory environment was ready for network configuration in the following phases.
-
----
-
-# Infrastructure Deployment Overview
-
-After completing the planning and design phase, the enterprise topology was implemented inside the EVE-NG environment. All routers, switches, and client devices were deployed according to the approved network design to ensure a consistent implementation throughout the project.
-
-The infrastructure deployment was performed before applying any routing, switching, or security configurations.
+## 📌 Objective
+The primary objective of this phase was to systematically instantiate the raw physical infrastructure layer within the **EVE-NG** emulation platform[cite: 1, 2]. This stage focuses on the structural placement of QEMU routing and switching nodes, provisioning virtual client endpoints, executing precise port-to-port cable interconnections, and running baseline hardware state audits before applying any logical Layer 2 or Layer 3 configurations[cite: 1, 2].
 
 ---
 
-# Enterprise Topology Deployment
+## 🏗️ Infrastructure Deployment Matrix
 
-The first task was to recreate the enterprise network topology inside EVE-NG based on the design prepared during the planning phase.
+Following the design parameters approved in the planning phase, the enterprise architecture was mapped onto the EVE-NG canvas workspace[cite: 1, 2]. Devices were organized into distinct geographical zones (Corporate Headquarters, Branch-1, and Branch-2) to ensure structural readability and ease long-term troubleshooting[cite: 1].
 
-The topology consists of:
+No networking services, IP assignments, or firewall policies were active during this deployment window; the focus was purely on establishing the underlying hardware matrix[cite: 1].
 
-- Headquarters (HQ)
-- Branch Office 01
-- Branch Office 02
-- Core Switching Infrastructure
-- Access Layer
-- Client Devices
-- Internet Connection
+### 📑 Documentation Evidence
 
-Each device was positioned according to the enterprise design to improve readability and simplify future troubleshooting.
-
-### Documentation Evidence
-
-#### Figure 1. Enterprise Topology Deployment
-
+#### Figure 1. Global Enterprise Infrastructure Canvas
 ![Enterprise Topology Deployment](../images/phase-02/enterprise-topology-deployment.png)
-
-*Enterprise network topology deployed inside the EVE-NG environment.*
+*Complete physical layout composition actively provisioned within the EVE-NG sandbox environment[cite: 1, 2].*
 
 ---
 
-# Deploying MikroTik Routers
+## 🎛️ Computing & Routing Node Ingestion
 
-The required MikroTik CHR routers were added to the topology.
+The core routing layer comprises four MikroTik Cloud Hosted Router (CHR) virtual instances operating on standard QEMU templates[cite: 1, 2]. These instances provide the raw processing capacity needed for multi-area OSPF routing, stateful packet inspection, and active gateway failovers[cite: 1].
 
-The deployed routers included:
+| Node Hostname | Image Template | Resource Profile | Deployment Role & Objective |
+| :--- | :--- | :--- | :--- |
+| **HQ-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Primary HQ Border Gateway / VRRP Master Router / NAT Egress Edge[cite: 1]. |
+| **HQ-R2** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Redundant HQ Core Gateway / VRRP Backup Router / Dynamic OSPF Anchor[cite: 1]. |
+| **BR1-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Branch-1 Perimeter Boundary Gateway Node (OSPF Area 10)[cite: 1]. |
+| **BR2-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Branch-2 Perimeter Boundary Gateway Node (OSPF Area 20)[cite: 1]. |
 
-| Device | Purpose |
-|---------|---------|
-| HQ-R1 | Headquarters Router |
-| BR1-R1 | Branch Office 01 Router |
-| BR2-R1 | Branch Office 02 Router |
+### 📑 Documentation Evidence
 
-Each router was placed according to the planned topology to maintain a structured enterprise network layout.
-
-### Documentation Evidence
-
-#### Figure 2. Router Deployment
-
+#### Figure 2. Routing Engines Activation
 ![Router Deployment](../images/phase-02/router-deployment.png)
-
-*Deployment of MikroTik CHR routers inside the EVE-NG topology.*
+*MikroTik RouterOS v7 instances successfully positioned and tracking clean power states[cite: 1, 2].*
 
 ---
 
-# Deploying Switching Infrastructure
+## 🎚️ Switching Fabric Deployment
 
-Core and access switches were deployed to provide Layer 2 connectivity between routers and end-user devices.
+Layer 2 distribution and access structures were established using high-density virtual switches[cite: 1, 2]. These fabrics are sized to handle multi-VLAN trunk configurations and hardware-level bridge filtering[cite: 1, 2].
 
-The switching infrastructure was prepared for future VLAN implementation and Inter-VLAN routing.
+* **Headquarters Switching Array:** Deployed `CORE-SW1` and `CORE-SW2` in a redundant core configuration to support multi-department cross-chassis trunks[cite: 1, 2].
+* **Branch Switching Arrays:** Deployed `BR1-SW1` and `BR2-SW1` to handle access-layer distribution for remote client endpoints[cite: 1, 2].
 
-### Documentation Evidence
+### 📑 Documentation Evidence
 
-#### Figure 3. Switch Deployment
-
+#### Figure 3. Core Switching Matrix Ingestion
 ![Switch Deployment](../images/phase-02/switch-deployment.png)
-
-*Deployment of core and access switches.*
+*Switching components deployed and aligned for IEEE 802.1Q broadcast domain segmentation[cite: 1, 2].*
 
 ---
 
-# Deploying End Devices
+## 🖥️ Simulated Endhosts & Centralized Application Layers
 
-Virtual PC (VPCS) devices were added to simulate enterprise users.
+To thoroughly validate network operations (such as DHCP leases, Inter-VLAN routing, NAT translation, and stateful ACL drops), virtual client endpoints and production servers were integrated directly into their designated segments[cite: 1, 2]:
 
-These client devices will later be used to verify:
+* **HQ Corporate User Space:** Provisioned specialized Virtual PC Simulators (VPCS) mapping back to the **HR**, **Sales**, **IT**, and **Management** zones[cite: 1, 2].
+* **HQ Datacenter Server Farm:** Provisioned the core `File-SERVER` alongside the dedicated `SYSLOG-SERVER` / `NTP-SERVER` asset within the isolated Server segment[cite: 1, 2].
+* **Branch Office Endpoint Spaces:** Provisioned localized client VPCS hosts (`BR1-PC1`, `BR1-PC2`, `BR2-PC1`, `BR2-PC2`) across both remote distributed sites[cite: 1, 2].
 
-- DHCP
-- Inter-VLAN Routing
-- OSPF Connectivity
-- Internet Access
-- Firewall Policies
-- High Availability
+### 📑 Documentation Evidence
 
-### Documentation Evidence
-
-#### Figure 4. Client Device Deployment
-
+#### Figure 4. Enterprise Client Sub-Arrays
 ![Client Device Deployment](../images/phase-02/client-device-deployment.png)
-
-*Virtual client devices deployed within the enterprise topology.*
+*Simulated user endpoint nodes actively provisioned across all target department networks[cite: 1, 2].*
 
 ---
 
-# Physical Link Configuration
+## 🔌 Link Interconnection Matrix
 
-After deploying all devices, the required network links were created according to the enterprise design.
+Cabling layouts were executed using an exact port-to-port mapping scheme to prevent packet leaks and interface alignment errors during downstream configuration stages[cite: 1, 2]:
 
-Connections were established between:
+```text
+  [ Corporate HQ Backbone ] ──> HQ-R1/HQ-R2 eth1 ↔ CORE-SW1/CORE-SW2 eth1 (Core Trunks)[cite: 2]
+                                         │
+                                         ▼
+  [ Point-to-Point WAN Mesh ] ──> HQ Gateways eth2/eth3 ↔ Branch Routers eth2/eth3 (Transit Pipes)[cite: 2]
+                                         │
+                                         ▼
+  [ Central Internet Access ] ──> HQ-R1 eth4 ↔ EVE-NG pnet0 Management Cloud (External NAT)[cite: 2]
+```
 
-- Headquarters Router and Core Switch
-- Headquarters Router and Branch Router 01
-- Headquarters Router and Branch Router 02
-- Branch Routers and Access Switches
-- Switches and Client Devices
-- Headquarters Router and Internet
+### Verified Connection Interface Mappings:
+1. **HQ Core Links:** `HQ-R1 eth1 ↔ CORE-SW1 eth1` | `HQ-R2 eth1 ↔ CORE-SW2 eth1`[cite: 2].
+2. **Transit Switching Mesh:** `CORE-SW1 eth2 ↔ CORE-SW2 eth2`[cite: 2].
+3. **WAN-01 / WAN-03 Trunks:** `BR1-R1 eth2 ↔ HQ-R1 eth2` | `BR1-R1 eth3 ↔ HQ-R2 eth2`[cite: 2].
+4. **WAN-02 / WAN-04 Trunks:** `BR2-R1 eth2 ↔ HQ-R1 eth3` | `BR2-R1 eth3 ↔ HQ-R2 eth3`[cite: 2].
+5. **Access Boundary Feeds:** `BR1-R1 eth1 ↔ BR1-SW1 eth1` | `BR2-R1 eth1 ↔ BR2-SW1 eth1`[cite: 2].
 
-The physical connectivity was verified before proceeding to device configuration.
+### 📑 Documentation Evidence
 
-### Documentation Evidence
-
-#### Figure 5. Physical Connections
-
+#### Figure 5. Hardware Interconnect Maps
 ![Physical Connections](../images/phase-02/physical-connections.png)
-
-*Physical links established between enterprise network devices.*
+*Interface maps showing verified patch panel link states across all enterprise interfaces[cite: 1, 2].*
 
 ---
 
-# Initial Topology Verification
+## 🔍 Post-Deployment Infrastructure Audit
 
-After completing the deployment, the topology was reviewed to verify that every device had been added correctly and all required links were connected.
+Before finalizing this deployment stage, a strict configuration check was performed to confirm hypervisor stability and topology alignment[cite: 1]:
+* Verified all four core routing engines booted cleanly without kernel faults[cite: 1].
+* Confirmed that all access layer links reported active statuses with zero interface drops[cite: 2].
+* Audited all physical ports against the master design spec to ensure absolute interface symmetry[cite: 1].
 
-The following checks were performed before continuing to the configuration phase:
+### 📑 Documentation Evidence
 
-- All routers successfully deployed
-- All switches successfully deployed
-- Client devices added
-- Required links connected
-- No disconnected interfaces
-- Enterprise topology matched the original network design
-
-### Documentation Evidence
-
-#### Figure 6. Completed Infrastructure
-
+#### Figure 6. Validated Emulation Topology Engine
 ![Completed Infrastructure](../images/phase-02/completed-infrastructure.png)
-
-*Completed enterprise infrastructure inside the EVE-NG laboratory.*
-
----
-
-# Phase Verification
-
-The infrastructure deployment was verified before beginning network configuration.
-
-| Verification Item | Status |
-|------------------------------|--------|
-| Enterprise Topology Created | ✅ |
-| HQ Router Deployed | ✅ |
-| Branch Routers Deployed | ✅ |
-| Switching Infrastructure Ready | ✅ |
-| Client Devices Added | ✅ |
-| Physical Connections Completed | ✅ |
-| Topology Verified | ✅ |
-| Ready for Network Configuration | ✅ |
+*The fully assembled enterprise multi-branch network ready for configuration scripting[cite: 1, 2].*
 
 ---
 
-# Outcome
+## 🔍 Validation Matrix
 
-This phase successfully deployed the complete enterprise network infrastructure within the EVE-NG virtual environment. All routers, switches, and client devices were added according to the planned topology, and the required physical connections were established and verified. With the infrastructure fully prepared, the environment was ready for the configuration of VLANs, routing, IP addressing, and enterprise network services in the subsequent phases.
+| Target Verification Control Item | Current Status | Structural Notes |
+| :--- | :--- | :--- |
+| **Global Topology Schema Instantiated** | ✅ Validated | Visual node coordinates mapped correctly onto the canvas[cite: 1]. |
+| **HQ Redundant Routing Pair Deployed** | ✅ Validated | `HQ-R1` and `HQ-R2` CHR templates running stable metrics[cite: 1, 2]. |
+| **Branch Boundary Engines Provisioned** | ✅ Validated | `BR1-R1` and `BR2-R1` boundary systems active[cite: 1, 2]. |
+| **Switching Fabric Layers Positioned** | ✅ Validated | Core and access switches provisioned for bridge filtering[cite: 1, 2]. |
+| **Endpoint Client Emulators Staged** | ✅ Validated | Department user spaces and datacenter servers running cleanly[cite: 1, 2]. |
+| **Physical Cable Interconnections Fixed** | ✅ Validated | All point-to-point WAN and LAN trunk lines verified port-to-port[cite: 1, 2]. |
+| **Edge Management Cloud Integrated** | ✅ Validated | `HQ-R1 eth4` mapped successfully to the external `pnet0` network[cite: 2]. |
+
+---
+
+## 🎯 Phase Outcome
+Phase 02 has successfully reached its structural objectives[cite: 1]. The raw enterprise multi-branch network environment is now completely assembled and validated inside EVE-NG[cite: 1, 2]. All computing engines, core switches, and client endhosts are properly cabled and showing healthy power states[cite: 1, 2]. The virtual testbed has passed all physical readiness checks and is fully prepared for Phase 03, where we will build the Layer 2 bridge VLAN segmentation structures[cite: 1].
+```

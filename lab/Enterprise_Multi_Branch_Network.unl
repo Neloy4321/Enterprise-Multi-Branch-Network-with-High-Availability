@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lab name="Enterprise_Multi_Branch_Network" version="1" scripttimeout="300" lock="0">
+  <description>Job-Ready Enterprise Multi-Branch Network with High Availability
+
+Features:
+- OSPF Multi-Area
+- VLAN Segmentation
+- Inter-VLAN Routing
+- DHCP
+- NAT
+- ACL
+- VRRP
+- SSH Management
+- Syslog
+- NTP
+
+Sites:
+- HQ
+- Branch-1
+- Branch-2</description>
+  <body>Enterprise Multi-Branch Network Project Roadmap
+Project Name
+Enterprise Multi-Branch Network with High Availability
+
+
+Phase 0 — Planning &amp; Design
+Objective
+Finalize the entire architecture before touching any configuration.
+
+Tasks
+0.1 Business Requirement Analysis
+Identify departments
+Identify users
+Identify servers
+Identify printers
+Identify growth requirements
+0.2 Topology Design
+HQ Design
+Branch-1 Design
+Branch-2 Design
+WAN Design
+High Availability Design
+0.3 Device Planning
+Router Count
+Switch Count
+Server Count
+End Device Count
+0.4 Documentation Creation
+Create:
+
+Business Requirements
+Topology Diagram
+Device Inventory
+Deliverables
+Approved Architecture
+Approved Topology
+Design Documentation
+
+Phase 1 — IP Addressing &amp; VLAN Planning
+Objective
+Create a scalable addressing structure.
+
+Tasks
+1.1 VLAN Design
+HQ
+
+VLAN 10 HR
+VLAN 20 Sales
+VLAN 30 IT
+VLAN 40 Server
+VLAN 50 Management
+VLAN 60 Printer
+Branch-1
+
+VLAN 110 User
+VLAN 120 Printer
+Branch-2
+
+VLAN 210 User
+VLAN 220 Printer
+1.2 Subnet Design
+Assign:
+
+Gateway IP
+Network Range
+DHCP Range
+1.3 WAN Addressing
+Assign:
+
+Point-to-Point Networks
+Router Interfaces
+Deliverables
+VLAN Plan
+IP Addressing Plan
+WAN Plan
+
+Phase 2 — EVE-NG Infrastructure Build
+Objective
+Build the lab environment.
+
+Tasks
+2.1 Deploy Routers
+HQ-R1
+HQ-R2
+BR1-R1
+BR2-R1
+2.2 Deploy Switches
+CORE-SW1
+CORE-SW2
+BR1-SW1
+BR2-SW1
+2.3 Deploy Servers
+DHCP Server
+File Server
+Syslog Server
+NTP Server
+2.4 Deploy End Devices
+HQ PCs
+Branch PCs
+Printers
+2.5 Connect All Devices
+Ethernet Links
+WAN Links
+Deliverables
+Fully Built Lab Topology
+
+Phase 3 — Layer 2 Configuration
+Objective
+Build VLAN infrastructure.
+
+Tasks
+3.1 Create VLANs
+Create all VLANs.
+
+3.2 Configure Access Ports
+Assign ports to VLANs.
+
+3.3 Configure Trunks
+Configure:
+
+Switch-to-Switch Trunks
+Switch-to-Router Trunks
+3.4 Verify VLAN Operation
+Verify:
+
+VLAN Database
+Port Membership
+Deliverables
+Working Layer 2 Network
+
+Phase 4 — Inter-VLAN Routing
+Objective
+Enable communication between VLANs.
+
+Tasks
+4.1 Configure Gateway Interfaces
+4.2 Configure Router-on-a-Stick
+or
+
+4.3 Configure Layer 3 Routing
+4.4 Verify Connectivity
+Test:
+
+HR → Sales
+Sales → IT
+IT → Server
+Deliverables
+Inter-VLAN Routing Operational
+
+Phase 5 — DHCP Deployment
+Objective
+Automate IP Assignment.
+
+Tasks
+5.1 Configure DHCP Server
+Create pools for:
+
+HR
+Sales
+IT
+Management
+Printer
+Branch VLANs
+5.2 Configure DHCP Relay
+For Branch Networks.
+
+5.3 Verify DHCP
+Confirm:
+
+IP
+Gateway
+DNS
+Deliverables
+DHCP Operational
+
+Phase 6 — OSPF Multi-Area Routing
+Objective
+Implement enterprise routing.
+
+Tasks
+6.1 Configure Area 0
+HQ
+
+6.2 Configure Area 10
+Branch-1
+
+6.3 Configure Area 20
+Branch-2
+
+6.4 Establish Neighbors
+Verify:
+
+Adjacency
+LSDB
+Routes
+Deliverables
+OSPF Fully Operational
+
+Phase 7 — NAT Configuration
+Objective
+Provide Internet Access.
+
+Tasks
+7.1 Configure NAT
+At HQ Edge Router.
+
+7.2 Define Inside Interfaces
+7.3 Define Outside Interface
+7.4 Verify Translation
+Deliverables
+Internet Access Operational
+
+Phase 8 — ACL Security Implementation
+Objective
+Control Traffic Flow.
+
+Tasks
+8.1 HR Restrictions
+Block:
+
+HR → IT
+8.2 Branch Restrictions
+Block:
+
+Branch Users → Management VLAN
+8.3 Server Access
+Allow:
+
+Sales → File Server
+8.4 Management Access
+Allow:
+
+IT → Network Devices
+Deliverables
+Security Policies Operational
+
+Phase 9 — VRRP High Availability
+Objective
+Implement Gateway Redundancy.
+
+Tasks
+9.1 Configure VRRP
+HQ-R1
+
+HQ-R2
+
+9.2 Configure Virtual Gateway
+9.3 Configure Priority
+9.4 Failover Testing
+Test:
+
+Shutdown HQ-R1
+Verify Continuity
+Deliverables
+High Availability Operational
+
+Phase 10 — SSH Management
+Objective
+Secure Device Administration.
+
+Tasks
+10.1 Configure Hostnames
+10.2 Configure SSH
+10.3 Create Admin Users
+10.4 Disable Telnet
+10.5 Verify Remote Login
+Deliverables
+Secure Management Operational
+
+Phase 11 — Monitoring Services
+Objective
+Enterprise Monitoring &amp; Logging.
+
+Tasks
+11.1 Configure Syslog
+11.2 Configure NTP
+11.3 Verify Log Collection
+11.4 Verify Time Synchronization
+Deliverables
+Monitoring Services Operational
+
+Phase 12 — Testing &amp; Validation
+Objective
+Verify the entire network.
+
+Tasks
+Connectivity Testing
+Ping
+Traceroute
+Routing Testing
+OSPF
+DHCP Testing
+NAT Testing
+ACL Testing
+SSH Testing
+VRRP Testing
+Syslog Testing
+NTP Testing
+Deliverables
+Complete Test Report
+
+Phase 13 — Final Documentation
+Objective
+Create portfolio-quality documentation.
+
+Tasks
+Prepare:
+Final Topology
+IP Plan
+VLAN Plan
+OSPF Design
+ACL Design
+VRRP Design
+Test Results
+Screenshots
+Troubleshooting Notes
+Deliverables
+Final PDF Documentation
+Configuration Backup
+EVE-NG Lab Backup
+
+Project Completion Criteria
+The project is considered complete only when:
+
+✓ All Devices Deployed
+
+✓ All VLANs Working
+
+✓ Inter-VLAN Routing Working
+
+✓ DHCP Working
+
+✓ OSPF Working
+
+✓ NAT Working
+
+✓ ACL Working
+
+✓ VRRP Working
+
+✓ SSH Working
+
+✓ Syslog Working
+
+✓ NTP Working
+
+✓ Documentation Completed
+
+✓ Testing Report Completed</body>
+  <topology>
+    <nodes>
+      <node id="1" name="HQ-R1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="6" uuid="4bb31a00-77d2-4526-9d98-24c4be6dd9fb" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Router-2D-Gen-White-S.svg" config="0" left="375" top="330">
+        <interface id="0" name="eth1" type="ethernet" network_id="1"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="6"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="7"/>
+        <interface id="3" name="eth4" type="ethernet" network_id="21"/>
+      </node>
+      <node id="2" name="HQ-R2" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="6" uuid="44c5eb4d-36e2-4aee-ba28-47f815406792" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Router-2D-Gen-White-S.svg" config="0" left="1329" top="336">
+        <interface id="0" name="eth1" type="ethernet" network_id="2"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="8"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="9"/>
+      </node>
+      <node id="3" name="CORE-SW1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="12" uuid="d181a7cf-6bbc-4f49-926f-038d7e9c8345" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Switch.png" config="0" left="702" top="345">
+        <interface id="0" name="eth1" type="ethernet" network_id="1"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="3"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="10"/>
+        <interface id="3" name="eth4" type="ethernet" network_id="11"/>
+        <interface id="4" name="eth5" type="ethernet" network_id="12"/>
+        <interface id="5" name="eth6" type="ethernet" network_id="13"/>
+      </node>
+      <node id="4" name="CORE-SW2" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="12" uuid="1f27c121-643b-4d4c-9bf9-134faa0864f9" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Switch.png" config="0" left="957" top="348">
+        <interface id="0" name="eth1" type="ethernet" network_id="2"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="3"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="14"/>
+        <interface id="3" name="eth4" type="ethernet" network_id="15"/>
+        <interface id="4" name="eth5" type="ethernet" network_id="16"/>
+        <interface id="5" name="eth6" type="ethernet" network_id="22"/>
+        <interface id="6" name="eth7" type="ethernet" network_id="23"/>
+      </node>
+      <node id="5" name="BR1-R1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="4" uuid="48d12a6a-4f7e-47ab-b5dd-e382cc07c06f" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Router-2D-Gen-White-S.svg" config="0" left="837" top="24">
+        <interface id="0" name="eth1" type="ethernet" network_id="5"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="6"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="8"/>
+      </node>
+      <node id="6" name="BR2-R1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="4" uuid="ac9029f4-f200-419c-8fae-00b8c32ea013" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Router-2D-Gen-White-S.svg" config="0" left="855" top="594">
+        <interface id="0" name="eth1" type="ethernet" network_id="4"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="7"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="9"/>
+      </node>
+      <node id="7" name="BR1-SW1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="12" uuid="f55d53f6-c321-4248-916e-d1e1c606129e" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Switch.png" config="0" left="546" top="21">
+        <interface id="0" name="eth1" type="ethernet" network_id="5"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="17"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="18"/>
+      </node>
+      <node id="8" name="BR2-SW1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="12" uuid="faec6287-5898-4388-8302-767213cbcdfc" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Switch.png" config="0" left="1041" top="612">
+        <interface id="0" name="eth1" type="ethernet" network_id="4"/>
+        <interface id="1" name="eth2" type="ethernet" network_id="19"/>
+        <interface id="2" name="eth3" type="ethernet" network_id="20"/>
+      </node>
+      <node id="9" name="HR-PC1" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="663" top="234">
+        <interface id="0" name="eth0" type="ethernet" network_id="10"/>
+      </node>
+      <node id="10" name="SALES-PC1" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="654" top="456">
+        <interface id="0" name="eth0" type="ethernet" network_id="12"/>
+      </node>
+      <node id="11" name="HR-PC2" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="768" top="234">
+        <interface id="0" name="eth0" type="ethernet" network_id="11"/>
+      </node>
+      <node id="12" name="SALES-PC2" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="750" top="456">
+        <interface id="0" name="eth0" type="ethernet" network_id="13"/>
+      </node>
+      <node id="13" name="IT-PC1" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="936" top="231">
+        <interface id="0" name="eth0" type="ethernet" network_id="14"/>
+      </node>
+      <node id="14" name="IT-PC2" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="1029" top="228">
+        <interface id="0" name="eth0" type="ethernet" network_id="15"/>
+      </node>
+      <node id="15" name="ADMIN-PC" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="897" top="474">
+        <interface id="0" name="eth0" type="ethernet" network_id="16"/>
+      </node>
+      <node id="16" name="BR1-PC1" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="381" top="15">
+        <interface id="0" name="eth0" type="ethernet" network_id="17"/>
+      </node>
+      <node id="17" name="BR1-PC2" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="384" top="84">
+        <interface id="0" name="eth0" type="ethernet" network_id="18"/>
+      </node>
+      <node id="18" name="BR2-PC1" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="1269" top="552">
+        <interface id="0" name="eth0" type="ethernet" network_id="19"/>
+      </node>
+      <node id="19" name="BR2-PC2" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="PC-2D-Desktop-Generic-S.svg" config="0" left="1266" top="636">
+        <interface id="0" name="eth0" type="ethernet" network_id="20"/>
+      </node>
+      <node id="20" name="File-SERVER" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop_Win.png" config="0" left="1011" top="453">
+        <interface id="0" name="eth0" type="ethernet" network_id="22"/>
+      </node>
+      <node id="21" name="SYSLOG-SERVER" type="vpcs" template="vpcs" image="" ethernet="1" delay="0" icon="Desktop_Win.png" config="0" left="1120" top="453">
+        <interface id="0" name="eth0" type="ethernet" network_id="23"/>
+      </node>
+    </nodes>
+    <networks>
+      <network id="1" type="bridge" name="Net-HQ-R1iface_0" left="285" top="190" visibility="0" icon="lan.png"/>
+      <network id="2" type="bridge" name="Net-HQ-R2iface_0" left="282" top="352" visibility="0" icon="lan.png"/>
+      <network id="3" type="bridge" name="Net-CORE-SW1iface_1" left="447" top="202" visibility="0" icon="lan.png"/>
+      <network id="4" type="bridge" name="Net-BR2-R1iface_0" left="606" top="445" visibility="0" icon="lan.png"/>
+      <network id="5" type="bridge" name="Net-BR1-R1iface_0" left="612" top="103" visibility="0" icon="lan.png"/>
+      <network id="6" type="bridge" name="Net-HQ-R1iface_1" left="279" top="226" visibility="0" icon="lan.png"/>
+      <network id="7" type="bridge" name="Net-HQ-R1iface_2" left="285" top="196" visibility="0" icon="lan.png"/>
+      <network id="8" type="bridge" name="Net-HQ-R2iface_1" left="906" top="358" visibility="0" icon="lan.png"/>
+      <network id="9" type="bridge" name="Net-BR2-R1iface_2" left="585" top="466" visibility="0" icon="lan.png"/>
+      <network id="10" type="bridge" name="Net-HR-PC1iface_0" left="513" top="274" visibility="0" icon="lan.png"/>
+      <network id="11" type="bridge" name="Net-HR-PC2iface_0" left="597" top="277" visibility="0" icon="lan.png"/>
+      <network id="12" type="bridge" name="Net-CORE-SW1iface_4" left="567" top="379" visibility="0" icon="lan.png"/>
+      <network id="13" type="bridge" name="Net-CORE-SW1iface_5" left="567" top="379" visibility="0" icon="lan.png"/>
+      <network id="14" type="bridge" name="Net-CORE-SW2iface_2" left="825" top="385" visibility="0" icon="lan.png"/>
+      <network id="15" type="bridge" name="Net-CORE-SW2iface_3" left="825" top="385" visibility="0" icon="lan.png"/>
+      <network id="16" type="bridge" name="Net-CORE-SW2iface_4" left="816" top="388" visibility="0" icon="lan.png"/>
+      <network id="17" type="bridge" name="Net-BR1-PC1iface_0" left="294" top="151" visibility="0" icon="lan.png"/>
+      <network id="18" type="bridge" name="Net-BR1-PC2iface_0" left="378" top="148" visibility="0" icon="lan.png"/>
+      <network id="19" type="bridge" name="Net-BR2-SW1iface_1" left="972" top="673" visibility="0" icon="lan.png"/>
+      <network id="20" type="bridge" name="Net-BR2-SW1iface_2" left="972" top="673" visibility="0" icon="lan.png"/>
+      <network id="21" type="pnet0" name="Net" left="135" top="339" visibility="1" icon="01-Cloud-Default.svg"/>
+      <network id="22" type="bridge" name="Net-CORE-SW2iface_5" left="1017" top="385" visibility="0" icon="lan.png"/>
+      <network id="23" type="bridge" name="Net-CORE-SW2iface_6" left="1017" top="385" visibility="0" icon="lan.png"/>
+    </networks>
+  </topology>
+</lab>

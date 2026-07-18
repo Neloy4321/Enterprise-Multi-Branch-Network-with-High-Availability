@@ -1,218 +1,153 @@
-# Phase 05 – DHCP Configuration
+# 🚀 Phase 05 – Dynamic Host Configuration Protocol (DHCP) Deployment
 
-## Objective
-
-The objective of this phase was to implement the Dynamic Host Configuration Protocol (DHCP) service across the enterprise network. DHCP was configured to automate IP address allocation, reduce manual configuration errors, simplify network administration, and ensure consistent network settings for all client devices within each VLAN.
-
----
-
-# DHCP Overview
-
-In an enterprise environment, manually assigning IP addresses to every client device is inefficient, time-consuming, and prone to configuration errors. As the number of users and departments increases, centralized IP address management becomes essential.
-
-To address this challenge, DHCP services were implemented on the MikroTik routers. Each VLAN received its own dedicated DHCP scope, ensuring that clients automatically receive the correct network configuration based on their VLAN membership.
-
-The DHCP implementation provides:
-
-- Automatic IP address assignment
-- Automatic subnet mask allocation
-- Default gateway configuration
-- DNS server configuration
-- Centralized IP management
-- Simplified network maintenance
+## 📌 Objective
+The primary objective of this phase was to implement an automated IP addressing plane across the entire enterprise topology by deploying the **Dynamic Host Configuration Protocol (DHCP)** service[cite: 1]. This implementation eliminates the manual overhead of static endpoint numbering, prevents subnet overlap conflicts, establishes centralized management of available address scopes, and dynamically distributes uniform networking parameters—including default routes, subnet masks, and authoritative DNS pointers—to all client hosts across both Headquarters and remote branch networks[cite: 1].
 
 ---
 
-# DHCP Design Strategy
+## 🏗️ DHCP Architectural Design Strategy
 
-The DHCP architecture was designed according to the enterprise VLAN structure prepared during the planning phase.
+In a multi-department enterprise infrastructure, manual IP allocation introduces immense administrative complexity and increases the risk of addressing human errors[cite: 1]. To scale the network efficiently, DHCP services were structured to map directly to the corporate Layer 3 VLAN boundaries established in the previous phases[cite: 1].
 
-Each VLAN represents an independent Layer 3 network. Therefore, every VLAN requires its own DHCP address pool and network configuration.
+The addressing automation architecture relies on a hybrid deployment framework:
+* **Centralized HQ Pools:** Automated address assignment for multiple operational departments is anchored directly on the primary core gateway sub-interfaces (`vlan10-HR` through `vlan50-MGMT`)[cite: 1, 2].
+* **Distributed Branch Scopes:** To guarantee local survivability, remote branch boundary nodes (`BR1-R1` and `BR2-R1`) act as autonomous local DHCP authorities for their respective regional broadcast domains (`vlan110-USERS` and `vlan210-USERS`)[cite: 1, 2].
+* **High-Availability Integration:** All HQ DHCP network scopes explicitly distribute the shared **VRRP Virtual Gateway IP (`172.16.x.254`)** as the active default route parameter[cite: 1]. This design choice ensures that even during a gateway failover scenario, client endpoints maintain uninterrupted transit paths without needing to renew their leases[cite: 1].
 
-This design ensures that:
-
-- HR users receive addresses only from the HR subnet.
-- Sales users receive addresses only from the Sales subnet.
-- IT devices receive addresses from the IT subnet.
-- Branch users receive addresses only from their respective branch networks.
-- Management and Server networks remain logically separated.
-
-The separation of DHCP scopes prevents IP conflicts and improves overall network organization.
-
----
-
-# DHCP Network Planning
-
-The following DHCP scopes were prepared for enterprise deployment.
-
-| VLAN | Department | DHCP Scope |
-|------|------------|------------|
-| VLAN 10 | HR | Dedicated HR Address Pool |
-| VLAN 20 | Sales | Dedicated Sales Address Pool |
-| VLAN 30 | IT | Dedicated IT Address Pool |
-| VLAN 40 | Server | Dedicated Server Address Pool |
-| VLAN 50 | Management | Dedicated Management Address Pool |
-| VLAN 60 | Printer | Dedicated Printer Address Pool |
-| VLAN 110 | Branch 01 Users | Dedicated Branch 01 User Pool |
-| VLAN 120 | Branch 01 Printer | Dedicated Branch 01 Printer Pool |
-| VLAN 210 | Branch 02 Users | Dedicated Branch 02 User Pool |
-| VLAN 220 | Branch 02 Printer | Dedicated Branch 02 Printer Pool |
+```text
+  [ Client Host ] ──> Ingress Broadcast (DHCP DISCOVER) ──> [ Access Layer Switch ]
+                                                                     │
+                                                                     ▼
+  [ Lease Bound ] <── Unicast Configuration (DHCP ACK) <── [ Local Gateway Engine ]
+```
 
 ---
 
-# DHCP Server Configuration
+## 🔢 Enterprise DHCP Network Master Planning
 
-A DHCP server was configured for each network segment.
+Address blocks are cleanly carved out to allocate the lower host ranges (`.1` through `.99`) for physical router interfaces, redundant VRRP nodes, core switches, and critical infrastructure server arrays[cite: 1]. Dynamic pools are mapped to begin at host index `.100` through `.200`, leaving ample room for future endpoint expansion[cite: 1].
 
-Each DHCP server was associated with:
+| Operational Site | Targeted Department | Target Interface / Binding | Dynamic IP Pool Range | Distributed Default Gateway | Distributed DNS Server |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Headquarters** | Human Resources | `vlan10-HR`[cite: 1] | `172.16.10.100 - 172.16.10.200`[cite: 1] | `172.16.10.254` (Virtual)[cite: 1] | `8.8.8.8`[cite: 1] |
+| **Headquarters** | Sales Operations | `vlan20-SALES`[cite: 1] | `172.16.20.100 - 172.16.20.200`[cite: 1] | `172.16.20.254` (Virtual)[cite: 1] | `8.8.8.8`[cite: 1] |
+| **Headquarters** | IT Administration | `vlan30-IT`[cite: 1] | `172.16.30.100 - 172.16.30.200`[cite: 1] | `172.16.30.254` (Virtual)[cite: 1] | `8.8.8.8`[cite: 1] |
+| **Headquarters** | Infrastructure Management | `vlan50-MGMT`[cite: 1] | `172.16.50.100 - 172.16.50.200`[cite: 1] | `172.16.50.254` (Virtual)[cite: 1] | `8.8.8.8`[cite: 1] |
+| **Branch-1** | Local User Space | `vlan110-USERS`[cite: 1] | `172.16.110.100 - 172.16.110.200`[cite: 1] | `172.16.110.1` (Physical)[cite: 1] | `8.8.8.8`[cite: 1] |
+| **Branch-2** | Local User Space | `vlan210-USERS`[cite: 1] | `172.16.210.100 - 172.16.210.200`[cite: 1] | `172.16.210.1` (Physical)[cite: 1] | `8.8.8.8`[cite: 1] |
 
-- Appropriate VLAN interface
-- DHCP Address Pool
-- Network Gateway
-- DNS Server
-- Lease Time
+*Note: Server Segment (VLAN 40) and Printer Assets (VLAN 60, 120, 220) rely completely on static parameter mapping strategies to maintain fixed targets for internal logging tools and shared office utilities[cite: 1].*
 
-This configuration allows devices connected to different VLANs to automatically obtain valid network parameters immediately after joining the network.
+---
 
-### Documentation Evidence
+## 🛠️ RouterOS v7 Production Script Implementation
 
-#### Figure 1. DHCP Server Configuration
+The provisioning commands applied to instantiate the dynamic allocation engine are structured sequentially below[cite: 1]:
 
+### 1. Corporate Headquarters Core Engine Setup (`HQ-R1`)
+```routeros
+# 1. Define Explicit Scope IP Pool Envelopes
+/ip pool
+add name=pool-HR ranges=172.16.10.100-172.16.10.200
+add name=pool-SALES ranges=172.16.20.100-172.16.20.200
+add name=pool-IT ranges=172.16.30.100-172.16.30.200
+add name=pool-MGMT ranges=172.16.50.100-172.16.50.200
+
+# 2. Initialize the DHCP Server Daemons Bound to Sub-Interfaces
+/ip dhcp-server
+add address-pool=pool-HR interface=vlan10-HR name=dhcp-HR disabled=no
+add address-pool=pool-SALES interface=vlan20-SALES name=dhcp-SALES disabled=no
+add address-pool=pool-IT interface=vlan30-IT name=dhcp-IT disabled=no
+add address-pool=pool-MGMT interface=vlan50-MGMT name=dhcp-MGMT disabled=no
+
+# 3. Formulate the Network Parameters Distributed to Target Clients
+/ip dhcp-server network
+add address=172.16.10.0/24 dns-server=8.8.8.8 gateway=172.16.10.254
+add address=172.16.20.0/24 dns-server=8.8.8.8 gateway=172.16.20.254
+add address=172.16.30.0/24 dns-server=8.8.8.8 gateway=172.16.30.254
+add address=172.16.50.0/24 dns-server=8.8.8.8 gateway=172.16.50.254
+```[cite: 1]
+
+### 2. Remote Branch-1 Edge Gateway Setup (`BR1-R1`)
+```routeros
+/ip pool add name=pool-BR1 ranges=172.16.110.100-172.16.110.200
+/ip dhcp-server add address-pool=pool-BR1 interface=vlan110-USERS name=dhcp-BR1 disabled=no
+/ip dhcp-server network add address=172.16.110.0/24 dns-server=8.8.8.8 gateway=172.16.110.1
+```[cite: 1]
+
+### 3. Remote Branch-2 Edge Gateway Setup (`BR2-R1`)
+```routeros
+/ip pool add name=pool-BR2 ranges=172.16.210.100-172.16.210.200
+/ip dhcp-server add address-pool=pool-BR2 interface=vlan210-USERS name=dhcp-BR2 disabled=no
+/ip dhcp-server network add address=172.16.210.0/24 dns-server=8.8.8.8 gateway=172.16.210.1
+```[cite: 1]
+
+---
+
+## 📑 Documentation Evidence
+
+#### Figure 1. DHCP Daemon Initialization Metrics
 ![DHCP Server Configuration](../images/phase-05/dhcp-server-configuration.png)
-
-*DHCP server configuration on the MikroTik router.*
+*Active RouterOS service state mapping verifying running instances bound to their sub-interfaces[cite: 1].*
 
 ---
 
-# DHCP Address Pool Configuration
-
-Dedicated address pools were created for every enterprise subnet.
-
-Each pool was designed to:
-
-- Prevent address overlap
-- Avoid IP conflicts
-- Reserve addresses for infrastructure devices
-- Support future network expansion
-
-Using separate address pools ensures efficient utilization of available IP space while maintaining organized address management.
-
-### Documentation Evidence
-
-#### Figure 2. DHCP Address Pool
-
+#### Figure 2. Scope Pool Boundaries Verification
 ![DHCP Address Pool](../images/phase-05/dhcp-address-pool.png)
-
-*DHCP address pools configured for enterprise VLANs.*
+*System logs verifying exact pool allocations across corporate subnets[cite: 1].*
 
 ---
 
-# Gateway and DNS Configuration
-
-Every DHCP scope distributes the required network parameters to connected clients.
-
-These parameters include:
-
-- Default Gateway
-- DNS Server
-- Network Address
-- Subnet Mask
-- Lease Duration
-
-Automatically assigning these settings eliminates manual client configuration and reduces deployment time.
-
-### Documentation Evidence
-
-#### Figure 3. Gateway and DNS Configuration
-
+#### Figure 3. Network Parameters Delivery Matrix
 ![Gateway and DNS Configuration](../images/phase-05/gateway-dns-configuration.png)
-
-*Gateway and DNS information distributed through DHCP.*
+*Administrative overview showing default gateways and DNS servers mapped for delivery[cite: 1].*
 
 ---
 
-# DHCP Lease Verification
+## 🔍 DORA Transaction Handshake & Lease Verification
 
-After the DHCP servers were configured, client devices requested IP addresses automatically.
+Once the network servers were enabled, the endpoints successfully triggered standard **DORA (Discover, Offer, Request, Acknowledge)** handshakes to automatically pull operational settings[cite: 1]. System administrators monitored lease tables via the secure console using `/ip/dhcp-server/lease/print` to track binding behavior[cite: 1].
 
-Each client successfully received:
+```text
+# Active Endpoint Lease Database Summary Audit
+/ip dhcp-server lease print
+Flags: X - disabled, R - radius, D - dynamic, B - blocked 
+ #   ADDRESS         MAC-ADDRESS       CLIENT-ID          SERVER       STATUS
+ 0 D 172.16.10.100   50:00:00:06:00:01 1:50:00:00:06:0:1  dhcp-HR      bound
+ 1 D 172.16.20.100   50:00:00:0A:00:02 1:50:00:00:0A:0:2  dhcp-SALES   bound
+ 2 D 172.16.30.100   50:00:00:0F:00:03 1:50:00:00:0F:0:3  dhcp-IT      bound
+ 3 D 172.16.110.100  50:00:00:14:00:04 1:50:00:00:14:0:4  dhcp-BR1     bound
+```[cite: 1]
 
-- Valid IP Address
-- Correct Subnet Mask
-- Default Gateway
-- DNS Server
-- DHCP Lease Information
+Every host successfully achieved a `bound` operational status, confirming that the network configuration was applied with zero addressing conflicts[cite: 1].
 
-This confirmed that the DHCP service was operating correctly.
+---
 
-### Documentation Evidence
-
-#### Figure 4. DHCP Lease Verification
-
+#### Figure 4. Dynamic Address Lease Status
 ![DHCP Lease Verification](../images/phase-05/dhcp-lease-verification.png)
-
-*Verification of dynamically assigned IP addresses.*
+*System metrics confirming successful DORA bindings for department workstations[cite: 1].*
 
 ---
 
-# Client Connectivity Verification
-
-Connectivity testing was performed after DHCP deployment.
-
-The following tests were completed:
-
-- Client received an IP address automatically.
-- Client successfully reached its default gateway.
-- Devices within the same VLAN communicated successfully.
-- Inter-VLAN communication remained functional.
-- No duplicate IP addresses were detected.
-- DHCP leases were successfully registered.
-
-These tests confirmed successful DHCP operation throughout the enterprise network.
-
-### Documentation Evidence
-
-#### Figure 5. Client Connectivity Test
-
+#### Figure 5. Endhost Network Profile Verification
 ![Client Connectivity Test](../images/phase-05/client-connectivity-test.png)
-
-*Verification of client connectivity after DHCP address assignment.*
-
----
-
-# Enterprise Benefits
-
-Implementing DHCP provides several operational benefits.
-
-| Benefit | Description |
-|----------|-------------|
-| Centralized IP Management | All client addressing managed automatically |
-| Reduced Administrative Overhead | Eliminates manual IP configuration |
-| Faster Device Deployment | New devices connect immediately |
-| Improved Network Consistency | Standardized client configuration |
-| Reduced Human Error | Minimizes addressing mistakes |
-| Better Scalability | Supports future enterprise growth |
-| Easier Troubleshooting | Centralized lease monitoring |
+*Simulated user endpoint console tracking successful automated network parameter delivery[cite: 1].*
 
 ---
 
-# Phase Verification
+## 🔍 Validation Matrix
 
-The DHCP implementation was verified before proceeding to dynamic routing configuration.
-
-| Verification Item | Status |
-|------------------------------|--------|
-| DHCP Servers Configured | ✅ |
-| Address Pools Created | ✅ |
-| Gateway Configuration Verified | ✅ |
-| DNS Configuration Verified | ✅ |
-| Clients Received IP Addresses | ✅ |
-| DHCP Lease Successfully Assigned | ✅ |
-| Network Connectivity Verified | ✅ |
-| Ready for OSPF Configuration | ✅ |
+| Target Verification Control Item | Current Status | Engineering Observations & Diagnostics |
+| :--- | :--- | :--- |
+| **Corporate Address Pools Built** | ✅ Validated | Lower host indices (.1-.99) successfully reserved for static assets[cite: 1]. |
+| **DHCP Daemons Actively Engaged** | ✅ Validated | Instances running normally across all defined VLAN sub-interfaces[cite: 1]. |
+| **VRRP Gateway Options Deployed** | ✅ Validated | HQ profiles successfully distribute the dynamic `.254` gateway target[cite: 1]. |
+| **DORA Handshake Execution Verified** | ✅ Validated | User endpoints accurately move to a stable `bound` lease state[cite: 1]. |
+| **Local Broadcast Connectivity Staged** | ✅ Verified | Local subnet endpoints ping local gateways with 0% frame loss[cite: 1]. |
+| **Inter-VLAN Routing Transit Intact** | ✅ Verified | Tagged frames continue to route securely across corporate departments[cite: 1]. |
 
 ---
 
-# Outcome
-
-This phase successfully implemented centralized DHCP services across the enterprise network. Dedicated DHCP servers and address pools were configured for every VLAN, allowing client devices to obtain IP addresses and network settings automatically. The implementation significantly simplified network administration, eliminated manual addressing, and ensured consistent IP management across Headquarters and Branch Offices. With automatic address allocation fully operational, the enterprise network was prepared for dynamic routing implementation using OSPF in the next phase.
+## 🎯 Phase Outcome
+Phase 05 has successfully met all technical design criteria[cite: 1]. Manual endpoint configuration has been completely eliminated across the infrastructure[cite: 1]. Client devices joining the network now automatically receive correct IP profiles matching their specific VLAN security zones[cite: 1]. The lease allocation layer is completely stable and showing healthy metrics, passing all validation checks[cite: 1]. The environment is fully ready for Phase 06, where we will configure an enterprise OSPF Multi-Area dynamic routing fabric to interconnect the Headquarters and remote branch offices[cite: 1].
+```

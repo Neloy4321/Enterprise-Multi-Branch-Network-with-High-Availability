@@ -1,230 +1,163 @@
-# Phase 01 – Enterprise Network Planning & Design
+# 📂 Phase 01 – Enterprise Network Planning & IP Addressing
 
-## Objective
-
-The objective of this phase was to design a scalable, secure, and highly available enterprise network architecture before beginning the actual implementation. A detailed network plan was prepared, including the physical and logical topology, IP addressing scheme, VLAN allocation, interface mapping, and network services to ensure a structured deployment throughout the project.
-
----
-
-# Project Overview
-
-This project simulates a real-world enterprise network consisting of one Headquarters (HQ) and two branch offices connected through dynamic routing. The network is designed to provide centralized management, secure communication, efficient traffic segmentation, and high availability while remaining scalable for future expansion.
-
-The enterprise network includes:
-
-- Headquarters (HQ)
-- Branch Office 1
-- Branch Office 2
-- Core Switching Infrastructure
-- Dynamic Routing
-- VLAN Segmentation
-- DHCP Services
-- NAT
-- Firewall & ACL
-- VRRP High Availability
+## 📌 Objective
+The primary objective of this phase was to construct a scalable, deterministic, and highly available enterprise architectural design blueprint before initiating any hardware configurations. This planning phase establishes a rigorous engineering specification covering physical topology interconnections, logical traffic paths, standard 802.1Q VLAN structures, full interface mapping matrices, a point-to-point WAN addressing layout, and multi-area routing domain scopes[cite: 1].
 
 ---
 
-# Project Requirements
+# 🏢 Project Blueprint Overview
 
-The following requirements were identified before implementation.
+This architecture simulates a high-availability corporate infrastructure spanning a centralized **Headquarters (HQ)** and two geographically isolated **Remote Branch Offices** linked via point-to-point transit WAN layers[cite: 1]. The planning matrix aligns directly with modern enterprise network design rules: maximizing infrastructure reliability, implementing zero-trust zone segmentation, and securing internal management perimeters[cite: 1].
 
-| Requirement | Description |
-|-------------|-------------|
-| Multi-Branch Connectivity | Connect HQ with two branch offices |
-| Dynamic Routing | OSPF Area 0 |
-| Network Segmentation | VLAN-based departmental separation |
-| Automatic IP Assignment | DHCP for client devices |
-| Internet Connectivity | NAT using MikroTik |
-| Network Security | Firewall Filters and ACL Rules |
-| High Availability | VRRP for gateway redundancy |
-| Scalability | Support future network expansion |
+### Core Enterprise Architecture Blocks:
+* **Resilient Edge Hub:** Dual-homed core architecture using active/backup default gateway redundancy[cite: 1].
+* **Hierarchical Core Switching:** Distributed VLAN trunk fabrics utilizing bridge filtering policies[cite: 1].
+* **Dynamic Multi-Area Routing Backbone:** Automatic path calculation and border route filtering layout[cite: 1].
+* **Centralized Application Zones:** Isolated secure server subnets hosting monitoring tools and database assets[cite: 1].
 
 ---
 
-# Enterprise Network Topology
+# 📋 Engineering Requirements Matrix
 
-The enterprise network follows a hierarchical architecture consisting of a Headquarters connected to two branch offices.
+| Design Requirement | Technical Strategy | Engineering Implementation Role |
+| :--- | :--- | :--- |
+| **Multi-Site Connectivity** | Redundant Transit WAN Networks | Interconnects the corporate hub with distributed branches over active/standby links[cite: 1]. |
+| **Dynamic Routing Fabric** | OSPF Multi-Area Protocols | Establishes Area 0 (Backbone), Area 10, and Area 20 dynamic route updates[cite: 1]. |
+| **Zoned Logic Isolation** | IEEE 802.1Q VLAN Segmentation | Allocates strict `/24` broadcast boundaries per corporate department[cite: 1]. |
+| **Automated Addressing** | Centralized DHCP Server & Relay | Provisions IP parameters automatically using the VRRP virtual gateway metric[cite: 1]. |
+| **Edge Border Translation** | Stateful Source NAT Masquerade | Consolidates internal corporate transit out of a single public edge port[cite: 1]. |
+| **Security Governance** | RouterOS Firewall Access Chains | Enforces stateful filter blocks across cross-zone inter-vlan traffic[cite: 1]. |
+| **Gateway Fault Tolerance** | VRRP Active/Standby Clusters | Shares a virtual gateway IP to handle instantaneous core link failures[cite: 1]. |
+| **Administrative Hardening** | Cryptographic SSH Tunneling | Disables vulnerable protocols (Telnet/HTTP) and restricts access to trusted zones[cite: 1]. |
 
-The Headquarters acts as the central location responsible for routing, network services, and communication with both branches. Each branch contains its own router and access switch for local users while maintaining connectivity with the HQ through dynamic routing.
+---
 
-This design provides centralized management while allowing independent operation of each branch.
+# 🗺️ Enterprise Network Architecture & Design
 
-### Documentation Evidence
+The enterprise framework is built around a classic tree-hierarchical structure. The corporate Headquarters functions as the root routing transit hub, the primary boundary authority for dynamic routing, and the central provider of internal resources[cite: 1]. Each remote branch operates its own local boundary gateway and downstream access switch layer, functioning autonomously for internal tasks while dynamically tracking remote paths via the WAN link meshes[cite: 1].
 
-#### Figure 1. Enterprise Network Topology
+### 📑 Documentation Evidence
 
+#### Figure 1. Enterprise Network Logical Blueprint
 ![Enterprise Network Topology](../images/phase-01/enterprise-network-topology.png)
-
-*Overall enterprise network topology showing Headquarters and Branch Offices.*
+*High-level conceptual blueprint defining the corporate boundaries, department zones, and WAN interconnections[cite: 1].*
 
 ---
 
-#### Figure 2. EVE-NG Lab Topology
-
+#### Figure 2. EVE-NG Production Topology Layout
 ![EVE-NG Lab Topology](../images/phase-01/eve-ng-topology.png)
-
-*Network topology implemented inside the EVE-NG laboratory environment.*
-
----
-
-# Network Devices
-
-The following virtual devices were used throughout the project.
-
-| Device | Purpose |
-|--------|---------|
-| HQ Router | Core routing and centralized services |
-| Branch Router 1 | Branch Office 1 routing |
-| Branch Router 2 | Branch Office 2 routing |
-| Core Switch | VLAN distribution and Layer 2 switching |
-| Access Switches | End-user connectivity |
-| VPCS | Simulated client devices |
+*The active simulated hardware node deployment grid executed inside the EVE-NG canvas workspace[cite: 1, 2].*
 
 ---
 
-# Hardware & Software Environment
+# 💾 Physical Inventory Configuration
 
-| Component | Version |
-|-----------|---------|
-| VMware Workstation Pro | 17.x |
-| EVE-NG Community Edition | 6.2.0-4 |
-| MikroTik CHR | 7.21.4 |
-| WinSCP | Latest |
-| PuTTY | Latest |
-| Draw.io | Latest |
-
----
-
-# Physical and Logical Network Design
-
-The physical topology illustrates how routers, switches, and end devices are interconnected inside the virtual lab.
-
-The logical topology represents the communication flow between network segments, routing domains, VLANs, and enterprise services.
-
-Separating the physical and logical design simplifies troubleshooting and future expansion.
-
-### Documentation Evidence
-
-#### Figure 3. Physical Topology
-
-![Physical Topology](../images/phase-01/physical-topology.png)
-
-*Physical connectivity between routers, switches, and end devices.*
+| Device Hostname | Emulated Hardware Platform | Operating System Engine | Primary Network Deployment Role |
+| :--- | :--- | :--- | :--- |
+| **HQ-R1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | VRRP Master Gateway / Border NAT / OSPF Backbone Node[cite: 1] |
+| **HQ-R2** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | VRRP Backup Gateway / Redundant OSPF Core Transit Node[cite: 1] |
+| **CORE-SW1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | HQ L2 Core Switch 1 (HR, Sales, IT Access Processing)[cite: 1, 2] |
+| **CORE-SW2** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | HQ L2 Core Switch 2 (Server Farms & Management Anchors)[cite: 1, 2] |
+| **BR1-R1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-1 Gateway / OSPF Area 10 Border Router[cite: 1] |
+| **BR1-SW1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-1 Local L2 Access Distribution Switch[cite: 1] |
+| **BR2-R1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-2 Gateway / OSPF Area 20 Border Router[cite: 1] |
+| **BR2-SW1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-2 Local L2 Access Distribution Switch[cite: 1] |
+| **Endhosts** | Virtual PC Simulator (VPCS) | EVE-NG Native | Simulated Client Endpoints (`HR-PC`, `SALES-PC`, `IT-PC`)[cite: 1] |
 
 ---
 
-#### Figure 4. Logical Topology
+# 🗺️ Detailed Physical & Logical Interface Map
 
-![Logical Topology](../images/phase-01/logical-topology.png)
+To maintain structural symmetry across the dual-homed layout, the core links and physical ports are mapped using a strict interface blueprint[cite: 1]:
 
-*Logical communication flow across the enterprise network.*
-
----
-
-# Interface Mapping
-
-A structured interface mapping was prepared before configuration to simplify deployment and troubleshooting.
-
-| Device | Interface | Connected To |
-|--------|-----------|--------------|
-| HQ Router | Ether1 | Internet |
-| HQ Router | Ether2 | Core Switch |
-| HQ Router | Ether3 | Branch Router 1 |
-| HQ Router | Ether4 | Branch Router 2 |
-| Branch Router 1 | Ether2 | Branch Switch |
-| Branch Router 2 | Ether2 | Branch Switch |
-
-### Documentation Evidence
-
-#### Figure 5. Interface Mapping
-
-![Interface Mapping](../images/phase-01/interface-mapping.png)
-
-*Interface mapping between all enterprise network devices.*
+| Source Node | Source Interface | Destination Node | Destination Interface | Operational Link Classification |
+| :--- | :--- | :--- | :--- | :--- |
+| **HQ-R1** | `ether1` | **CORE-SW1** | `ether1` | HQ Core Trunk Link (VLAN 10,20,30,40,50)[cite: 1, 2] |
+| **HQ-R1** | `ether2` | **BR1-R1** | `ether2` | Redundant WAN Link (WAN-01 Subnet)[cite: 1] |
+| **HQ-R1** | `ether3` | **BR2-R1** | `ether2` | Redundant WAN Link (WAN-02 Subnet)[cite: 1] |
+| **HQ-R1** | `ether4` | **Cloud0** | `pnet0` | Edge WAN Gateway Internet Egress Connection[cite: 1, 2] |
+| **HQ-R2** | `ether1` | **CORE-SW2** | `ether1` | Redundant HQ Core Trunk Link[cite: 1, 2] |
+| **HQ-R2** | `ether2` | **BR1-R1** | `ether3` | Redundant WAN Link (WAN-03 Subnet)[cite: 1] |
+| **HQ-R2** | `ether3` | **BR2-R1** | `ether3` | Redundant WAN Link (WAN-04 Subnet)[cite: 1] |
+| **CORE-SW1**| `ether2` | **CORE-SW2** | `ether2` | Inter-Switch Core Trunk Backbone Link[cite: 1, 2] |
+| **CORE-SW1**| `ether3` | **HR-PC1 / PC2**| `eth0` | Access Port Map: VLAN 10 (HR Subnet)[cite: 1, 2] |
+| **CORE-SW1**| `ether4` | **SALES-PC1/PC2**| `eth0` | Access Port Map: VLAN 20 (Sales Subnet)[cite: 1, 2] |
+| **CORE-SW1**| `ether5` | **IT-PC1 / PC2**| `eth0` | Access Port Map: VLAN 30 (IT Admin Subnet)[cite: 1, 2] |
+| **CORE-SW2**| `ether3` | **File-SERVER** | `eth0` | Access Port Map: VLAN 40 (Production Server)[cite: 1, 2] |
+| **CORE-SW2**| `ether4` | **ADMIN-PC** | `eth0` | Access Port Map: VLAN 50 (Management Subnet)[cite: 1, 2] |
+| **CORE-SW2**| `ether7` | **SYSLOG-SERVER**| `eth0` | Access Port Map: VLAN 40 (Monitoring Server)[cite: 1, 2] |
+| **BR1-R1** | `ether1` | **BR1-SW1** | `ether1` | Branch-1 Local Trunk Link (VLAN 110)[cite: 1, 2] |
+| **BR1-SW1** | `ether2/ether3`| **BR1-PC1 / PC2**| `eth0` | Access Port Map: VLAN 110 (Branch Users)[cite: 1, 2] |
+| **BR2-R1** | `ether1` | **BR2-SW1** | `ether1` | Branch-2 Local Trunk Link (VLAN 210)[cite: 1, 2] |
+| **BR2-SW1** | `ether2` | **BR2-PC1 / PC2**| `eth0` | Access Port Map: VLAN 210 (Branch Users)[cite: 1, 2] |
 
 ---
 
-# IP Addressing Strategy
+# 🔢 IP Addressing Strategy & Subnet Allocation Plan
 
-A structured IP addressing plan was developed to ensure proper subnet allocation, minimize address conflicts, and simplify future expansion.
+The addressing blueprint follows a strict matching system where the third octet of the IP network matches the local VLAN ID, making logic filtering and long-term troubleshooting significantly easier[cite: 1].
 
-Separate IP ranges were assigned for each VLAN and branch office.
+### 1. Corporate Headquarters Local Subnet Allocations
+* **VLAN 10 (HR Department):** `172.16.10.0/24` ── Gateway: `172.16.10.254` *(Shared Virtual IP)*[cite: 1]
+* **VLAN 20 (Sales Operations):** `172.16.20.0/24` ── Gateway: `172.16.20.254` *(Shared Virtual IP)*[cite: 1]
+* **VLAN 30 (IT Administration):** `172.16.30.0/24` ── Gateway: `172.16.30.254` *(Shared Virtual IP)*[cite: 1]
+* **VLAN 40 (Server Core Farm):** `172.16.40.0/24` ── Gateway: `172.16.40.254` *(Shared Virtual IP)*[cite: 1]
+* **VLAN 50 (Management Infrastructure):** `172.16.50.0/24` ── Gateway: `172.16.50.254` *(Shared Virtual IP)*[cite: 1]
 
-### Documentation Evidence
+### 2. Remote Branch Subnet Allocations
+* **VLAN 110 (Branch-1 Local Users):** `172.16.110.0/24` ── Gateway: `172.16.110.1` *(Local Router Physical IP)*[cite: 1]
+* **VLAN 210 (Branch-2 Local Users):** `172.16.210.0/24` ── Gateway: `172.16.210.1` *(Local Router Physical IP)*[cite: 1]
 
-#### Figure 6. IP Addressing Plan
-
-![IP Addressing Plan](../images/phase-01/ip-addressing-plan.png)
-
-*Enterprise IP addressing strategy used throughout the project.*
-
----
-
-# VLAN Planning
-
-Different VLANs were planned to isolate departments and improve network security and traffic management.
-
-The VLAN design allows each department to operate independently while communicating through Inter-VLAN routing.
-
-### Documentation Evidence
-
-#### Figure 7. VLAN Planning
-
-![VLAN Planning](../images/phase-01/vlan-planning.png)
-
-*Planned VLAN structure for the enterprise network.*
+### 3. Point-to-Point WAN Transport Links Addressing Plan
+To avoid wasting address space, point-to-point connections are carved cleanly out of localized `/30` subnets[cite: 1]:
+* **WAN-01 Matrix (HQ-R1 ↔ BR1-R1):** `10.0.1.0/30` ── `HQ-R1: 10.0.1.1` \| `BR1-R1: 10.0.1.2`[cite: 1]
+* **WAN-02 Matrix (HQ-R1 ↔ BR2-R1):** `10.0.2.0/30` ── `HQ-R1: 10.0.2.1` \| `BR2-R1: 10.0.2.2`[cite: 1]
+* **WAN-03 Matrix (HQ-R2 ↔ BR1-R1):** `10.0.3.0/30` ── `HQ-R2: 10.0.3.1` \| `BR1-R1: 10.0.3.2`[cite: 1]
+* **WAN-04 Matrix (HQ-R2 ↔ BR2-R1):** `10.0.4.0/30` ── `HQ-R2: 10.0.4.1` \| `BR2-R1: 10.0.4.2`[cite: 1]
 
 ---
 
-# Network Services Overview
+# 🗺️ OSPF Multi-Area Routing Design
 
-The following enterprise services were planned before implementation.
+Dynamic route propagation relies on a structural multi-area configuration model designed to isolate local link states within regional domains, significantly reducing CPU routing overhead[cite: 1]:
 
-| Service | Purpose |
-|----------|---------|
-| VLAN | Departmental Segmentation |
-| Inter-VLAN Routing | Communication between VLANs |
-| DHCP | Automatic IP Assignment |
-| OSPF | Dynamic Routing |
-| NAT | Internet Access |
-| Firewall | Traffic Filtering |
-| ACL | Access Control |
-| VRRP | Gateway Redundancy |
+```text
+       [Area 10 Domain]                       [Area 0 Backbone]                      [Area 20 Domain]
+   BR1-R1 (Local Area 10) 💻  <───>  HQ-R1 & HQ-R2 (Dynamic Core)  <───>  BR2-R1 (Local Area 20) 💻
+```
+
+* **Area 0 (Backbone Core):** Binds `HQ-R1`, `HQ-R2`, and all point-to-point transit links to establish the core route distribution layer[cite: 1].
+* **Area 10 (Branch-1 Domain):** Confines Branch-1 local subnets (`172.16.110.0/24`), advertising them back into Area 0 through the boundary interfaces[cite: 1].
+* **Area 20 (Branch-2 Domain):** Confines Branch-2 local subnets (`172.16.210.0/24`), maintaining isolation from Branch-1 internal state updates[cite: 1].
 
 ---
 
-# Project Workflow
+# 🔄 Structured Lifecycle Implementation Workflow
 
-The project was completed following a structured implementation process to ensure that each networking component was configured, tested, and documented before proceeding to the next phase.
+The implementation process followed a strict chronological ordering matrix to ensure no dependent network layers were executed prematurely[cite: 1]:
 
-### Documentation Evidence
-
-#### Figure 8. Project Workflow
-
-![Project Workflow](../images/phase-01/project-workflow.png)
-
-*Overall implementation workflow followed during the project.*
-
----
-
-# Phase Verification
-
-The planning phase was verified before starting the implementation.
-
-| Verification Item | Status |
-|-------------------|--------|
-| Enterprise Requirements Defined | ✅ |
-| Network Topology Designed | ✅ |
-| Device Selection Completed | ✅ |
-| Interface Mapping Prepared | ✅ |
-| IP Addressing Planned | ✅ |
-| VLAN Structure Designed | ✅ |
-| Network Services Planned | ✅ |
-| Ready for Implementation | ✅ |
+```text
+Phase 00: Environment Prep ──> Phase 03: Bridge VLANs ──> Phase 05: DHCP Scopes ──> Phase 07: NAT Edge
+                                         │                       │                       │
+                                         ▼                       ▼                       ▼
+                            Phase 04: ROSv7 Routing ──> Phase 06: OSPF Mesh   ──> Phase 08: ACL Chains
+```
 
 ---
 
-# Outcome
+# 🔍 Planning Verification Checklist
 
-This phase successfully established the complete design blueprint for the enterprise network. The topology, device layout, interface mapping, IP addressing strategy, VLAN planning, and required network services were finalized before implementation. With a well-defined design in place, the project was ready to proceed to the configuration and deployment phases. 
+| Target Validation Control Item | Planning Status | Architectural Notes |
+| :--- | :--- | :--- |
+| Core Corporate Scalability Specifications Defined | ✅ Approved | All system user limits and scope footprints validated[cite: 1]. |
+| Dual-Homed Workspace Topology Mapped | ✅ Approved | Link redundancy maps fully verified within EVE-NG[cite: 1, 2]. |
+| High-Availability /30 WAN Plan Structured | ✅ Approved | Complete transport network matrix fully calculated[cite: 1]. |
+| Explicit 802.1Q Bridge VLAN Scheme Mapped | ✅ Approved | Logical broadcast groups assigned matching octets[cite: 1, 2]. |
+| Stateful Firewall & Service Hardening Outlined | ✅ Approved | Input and Forward filtration chains cleanly defined[cite: 1]. |
+| Centralized Syslog & NTP Server Strategy Ready | ✅ Approved | Management zone pointers anchored at `172.16.40.201`[cite: 1]. |
+
+---
+
+# 🎯 Phase Outcome
+Phase 01 successfully completed all planning and network architecture objectives[cite: 1]. Every interface interconnection, point-to-point WAN subnet block, department VLAN identifier, and dynamic area boundary configuration has been strictly mapped out and cross-referenced with the business operational policies[cite: 1]. With this comprehensive logical blueprint completed, the project successfully passes its readiness checks and advances to the active virtualization environment deployment stage[cite: 1].
+```
