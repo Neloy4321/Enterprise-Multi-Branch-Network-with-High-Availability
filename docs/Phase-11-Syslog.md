@@ -71,6 +71,12 @@ add action=syslog-server topics=ospf comment="Forward dynamic area dynamic routi
 
 ## 📑 Documentation Evidence
 
+#### 📑 Documentation Evidence
+
+##### Figure 1. Centralized Syslog Architecture & Data Aggregation Flow
+![Syslog Architecture Diagram](../images/phase-11/syslog-architecture-diagram.png)
+*High-level architectural diagram showing real-time event log streaming over UDP 514 to the central Syslog server.*
+
 #### Figure 2. Remote Server Action Mapping Parameters
 ![Syslog Configuration](../images/phase-11/syslog-configuration.png)
 *Active RouterOS configuration dashboard verifying the functional remote syslog action target directed at the core storage endpoint.*
