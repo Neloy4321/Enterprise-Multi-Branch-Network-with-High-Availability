@@ -66,21 +66,24 @@ add address=172.16.10.0/24 dns-server=8.8.8.8 gateway=172.16.10.254
 add address=172.16.20.0/24 dns-server=8.8.8.8 gateway=172.16.20.254
 add address=172.16.30.0/24 dns-server=8.8.8.8 gateway=172.16.30.254
 add address=172.16.50.0/24 dns-server=8.8.8.8 gateway=172.16.50.254
-```[cite: 1]
+```
+[cite: 1]
 
 ### 2. Remote Branch-1 Edge Gateway Setup (`BR1-R1`)
 ```routeros
 /ip pool add name=pool-BR1 ranges=172.16.110.100-172.16.110.200
 /ip dhcp-server add address-pool=pool-BR1 interface=vlan110-USERS name=dhcp-BR1 disabled=no
 /ip dhcp-server network add address=172.16.110.0/24 dns-server=8.8.8.8 gateway=172.16.110.1
-```[cite: 1]
+```
+[cite: 1]
 
 ### 3. Remote Branch-2 Edge Gateway Setup (`BR2-R1`)
 ```routeros
 /ip pool add name=pool-BR2 ranges=172.16.210.100-172.16.210.200
 /ip dhcp-server add address-pool=pool-BR2 interface=vlan210-USERS name=dhcp-BR2 disabled=no
 /ip dhcp-server network add address=172.16.210.0/24 dns-server=8.8.8.8 gateway=172.16.210.1
-```[cite: 1]
+```
+[cite: 1]
 
 ---
 
@@ -117,7 +120,8 @@ Flags: X - disabled, R - radius, D - dynamic, B - blocked
  1 D 172.16.20.100   50:00:00:0A:00:02 1:50:00:00:0A:0:2  dhcp-SALES   bound
  2 D 172.16.30.100   50:00:00:0F:00:03 1:50:00:00:0F:0:3  dhcp-IT      bound
  3 D 172.16.110.100  50:00:00:14:00:04 1:50:00:00:14:0:4  dhcp-BR1     bound
-```[cite: 1]
+```
+[cite: 1]
 
 Every host successfully achieved a `bound` operational status, confirming that the network configuration was applied with zero addressing conflicts[cite: 1].
 
@@ -150,4 +154,3 @@ Every host successfully achieved a `bound` operational status, confirming that t
 
 ## 🎯 Phase Outcome
 Phase 05 has successfully met all technical design criteria[cite: 1]. Manual endpoint configuration has been completely eliminated across the infrastructure[cite: 1]. Client devices joining the network now automatically receive correct IP profiles matching their specific VLAN security zones[cite: 1]. The lease allocation layer is completely stable and showing healthy metrics, passing all validation checks[cite: 1]. The environment is fully ready for Phase 06, where we will configure an enterprise OSPF Multi-Area dynamic routing fabric to interconnect the Headquarters and remote branch offices[cite: 1].
-```
