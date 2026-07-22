@@ -45,7 +45,8 @@ add chain=srcnat out-interface=ether4 action=masquerade \
 # 3. Dynamic OSPF Routing Default Pointers Injection
 /routing ospf instance
 set [find name=ospf-core-hq] originate=always
-```[cite: 1]
+```
+[cite: 1]
 
 ---
 
@@ -103,4 +104,3 @@ With the masquerade rule active and default routing routes propagating across th
 
 ## 🎯 Phase Outcome
 Phase 07 has successfully met all edge architecture design criteria[cite: 1]. Safe, transparent internet access is fully established across the entire network infrastructure[cite: 1]. Client devices in both the internal Headquarters zones and remote branch offices can dynamically resolve external routes over point-to-point lines while keeping their underlying private address spaces completely hidden from the public internet[cite: 1]. The edge gateway is fully stable and optimized, passing all functional tests[cite: 1]. The architecture is now prepared for Phase 08, where we will configure strict stateful Firewall Access Control Lists (ACLs) to manage traffic flows between zones[cite: 1].
-```
