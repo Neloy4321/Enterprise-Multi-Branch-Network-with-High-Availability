@@ -39,7 +39,8 @@ add interface=ether1 name=vlan20-SALES vlan-id=20
 add interface=ether1 name=vlan30-IT vlan-id=30
 add interface=ether1 name=vlan40-SERVER vlan-id=40
 add interface=ether1 name=vlan50-MGMT vlan-id=50
-```[cite: 1]
+```
+[cite: 1]
 
 ### 2. Secondary Gateway Layer 3 Allocation Engine (HQ-R2)
 ```routeros
@@ -50,7 +51,8 @@ add interface=ether1 name=vlan20-SALES vlan-id=20
 add interface=ether1 name=vlan30-IT vlan-id=30
 add interface=ether1 name=vlan40-SERVER vlan-id=40
 add interface=ether1 name=vlan50-MGMT vlan-id=50
-```[cite: 1]
+```
+[cite: 1]
 
 ### Master Corporate Layer 3 Addressing Blueprint:
 During the baseline testing window, client endpoints used the explicit physical address metrics (`172.16.x.1`) as their temporary default route target prior to shifting toward virtualized topologies[cite: 1].
@@ -148,4 +150,3 @@ Following the convergence of the Layer 3 forwarding table engines, end-to-end fu
 
 ## 🎯 Phase Outcome
 Phase 04 has successfully met all corporate Layer 3 design specifications[cite: 1]. The isolated network broadcast zones configured in Phase 03 are now dynamically bridged via the core gateway sub-interfaces using an industry-standard Router-on-a-Stick architecture[cite: 1, 2]. Direct end-to-end communication tests verify that traffic moves safely across department perimeters without causing any logical leaks[cite: 1]. The baseline network layers are fully optimized, stable, and prepared for Phase 05, where we will automate client IP provisioning by configuring centralized DHCP Server scopes and Branch Relay agents[cite: 1].
-```
