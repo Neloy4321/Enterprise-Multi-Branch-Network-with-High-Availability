@@ -97,6 +97,12 @@ add address=172.16.50.254/24 interface=vrrp-MGMT
 
 ## 📑 Documentation Evidence
 
+#### 📑 Documentation Evidence
+
+##### Figure 1. High Availability VRRP Architecture & Failover Operational Model
+![VRRP High Availability Architecture](../images/phase-09/vrrp-architecture-diagram.png)
+*High-level structural diagram illustrating dual-gateway redundancy, priority metrics, and virtual IP routing targets.*
+
 #### Figure 2. Active Interface Clusters Setup Matrix
 ![VRRP Configuration](../images/phase-09/vrrp-configuration.png)
 *Active RouterOS configuration view confirming functional binding parameters across virtual interface trees.*
