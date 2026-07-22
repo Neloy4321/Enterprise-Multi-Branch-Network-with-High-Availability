@@ -72,6 +72,12 @@ set time-zone-name=Asia/Dhaka
 
 ## 📑 Documentation Evidence
 
+#### 📑 Documentation Evidence
+
+##### Figure 1. Centralized NTP Master-Client Time Synchronization Model
+![NTP Architecture Diagram](../images/phase-12/ntp-architecture-diagram.png)
+*High-level structural diagram illustrating NTP server hierarchy, client polling loops, and regional time zone localization.*
+
 #### Figure 2. NTP Client Service Engine Status
 ![NTP Client Configuration](../images/phase-12/ntp-client-configuration.png)
 *Active RouterOS service dashboard confirming the functional NTP client process running in unicast configuration mode.*
