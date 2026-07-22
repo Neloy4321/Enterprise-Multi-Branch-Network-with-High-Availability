@@ -69,7 +69,8 @@ add instance=ospf-core-hq area=backbone-area0 interfaces=vlan20-SALES passive=ye
 add instance=ospf-core-hq area=backbone-area0 interfaces=vlan30-IT passive=yes
 add instance=ospf-core-hq area=backbone-area0 interfaces=vlan40-SERVER passive=yes
 add instance=ospf-core-hq area=backbone-area0 interfaces=vlan50-MGMT passive=yes
-```[cite: 1]
+```
+[cite: 1]
 
 ### 2. Remote Branch-1 Edge Gateway Deployment (`BR1-R1`)
 ```routeros
@@ -81,7 +82,8 @@ add instance=ospf-core-hq area=backbone-area0 interfaces=vlan50-MGMT passive=yes
 add instance=ospf-branch1 area=backbone-area0 interfaces=ether2 network-type=ptp
 add instance=ospf-branch1 area=backbone-area0 interfaces=ether3 network-type=ptp
 add instance=ospf-branch1 area=branch1-area10 interfaces=vlan110-USERS passive=yes
-```[cite: 1]
+```
+[cite: 1]
 
 ### 3. Remote Branch-2 Edge Gateway Deployment (`BR2-R1`)
 ```routeros
@@ -93,7 +95,8 @@ add instance=ospf-branch1 area=branch1-area10 interfaces=vlan110-USERS passive=y
 add instance=ospf-branch2 area=backbone-area0 interfaces=ether2 network-type=ptp
 add instance=ospf-branch2 area=backbone-area0 interfaces=ether3 network-type=ptp
 add instance=ospf-branch2 area=branch2-area20 interfaces=vlan210-USERS passive=yes
-```[cite: 1]
+```
+[cite: 1]
 
 ---
 
@@ -115,7 +118,8 @@ Once the scripts converged, the discovery engine triggered Hello exchange cycles
 Instance       Area             Address          Interface    Router-ID       State
 ospf-core-hq   backbone-area0   10.0.1.2         ether2       11.11.11.11     Full
 ospf-core-hq   backbone-area0   10.0.2.2         ether3       22.22.22.22     Full
-```[cite: 1]
+```
+[cite: 1]
 
 An adjacency state of **Full** confirms that neighbor validation routines passed successfully, indicating error-free database synchronization[cite: 1].
 
@@ -138,7 +142,8 @@ Flags: D - DYNAMIC; A - ACTIVE; o - OSPF
    DST-ADDRESS      VALUE-GATEWAY   DISTANCE
 DAo 172.16.110.0/24  10.0.1.2%ether2  110
 DAo 172.16.210.0/24  10.0.2.2%ether3  110
-```[cite: 1]
+```
+[cite: 1]
 
 The presence of the `DAo` flag confirms that remote branch networks were dynamically injected into the corporate routing database without requiring any static route entries[cite: 1].
 
@@ -172,4 +177,3 @@ The presence of the `DAo` flag confirms that remote branch networks were dynamic
 
 ## 🎯 Phase Outcome
 Phase 06 has successfully achieved all complex dynamic routing architecture criteria[cite: 1]. The centralized Headquarters campus and remote branch locations are now dynamically linked using a production-grade OSPF Multi-Area configuration model[cite: 1]. Adjacency tables show stable connectivity states, path updates deploy automatically across transit networks during link changes, and multi-site pings pass all structural tests[cite: 1]. The dynamic network engine is fully optimized and prepared for Phase 07, where we will configure Source NAT internet egress access rules on the primary border gateway[cite: 1].
-```
