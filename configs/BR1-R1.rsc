@@ -46,6 +46,8 @@ set ssh disabled=no port=22 address=172.16.30.0/24,172.16.50.0/24
 /tool mac-server mac-winbox set allowed-interface-list=none
 /system logging action
 add name=remote-syslog target=remote remote=172.16.40.201 remote-log-format=syslog
+# Include informational events from the original lab logging policy.
+/system logging add action=remote-syslog topics=info
 /system logging add action=remote-syslog topics=warning
 /system logging add action=remote-syslog topics=error
 /system ntp client set enabled=yes

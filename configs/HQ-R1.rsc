@@ -129,6 +129,8 @@ set ssh disabled=no port=22 address=172.16.30.0/24,172.16.50.0/24
 /system logging action
 add name=remote-syslog target=remote remote=172.16.40.201 remote-log-format=syslog
 /system logging
+# Include informational events from the original lab logging policy.
+add action=remote-syslog topics=info
 add action=remote-syslog topics=warning
 add action=remote-syslog topics=error
 add action=remote-syslog topics=critical

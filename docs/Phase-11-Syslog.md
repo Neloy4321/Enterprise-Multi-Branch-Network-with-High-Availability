@@ -164,3 +164,7 @@ Validate on the router:
 Trigger an identifiable event in the lab. On the Linux server, inspect packet arrival and the per-host log file. A RouterOS logging rule alone does not demonstrate log delivery.
 
 **Status:** Client-side configuration prepared; server deployment and end-to-end Syslog evidence pending.
+
+## October 2026 logging coverage correction
+
+The updated scripts again forward `info` events to `172.16.40.201`, along with warning/error events (and critical messages from the HQ routers). This restores the broad informational visibility present in the original EVE-NG documentation. MikroTik can attach multiple topics such as `system,info,account` to a single message; the `info` rule matches informational messages. Test this in a real collector before treating the revised build as accepted.

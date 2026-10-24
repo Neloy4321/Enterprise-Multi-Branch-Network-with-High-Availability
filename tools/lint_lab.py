@@ -146,6 +146,7 @@ for name in router_names:
     check("/system ntp client set enabled=yes" in source, f"{name}: wrong v7 NTP path")
     check("/ntp client" not in source.replace("/system ntp client", ""), f"{name}: old NTP menu present")
     check("set winbox disabled=yes" in source, f"{name}: Winbox hardening absent")
+    check("add action=remote-syslog topics=info" in source, f"{name}: informational Syslog forwarding missing")
 
 readme = (ROOT / "README.md").read_text(encoding="utf-8")
 for link in re.findall(r"\]\(([^)]+)\)", readme):

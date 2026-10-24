@@ -64,6 +64,34 @@ flowchart TB
   R2 ---|Area 0 WAN| BR1
   R2 ---|Area 0 WAN| BR2
 ```
+### Original-style topology sketch
+
+The earlier README used a console-style topology drawing. This updated sketch keeps that format but reflects the actual 21-node export and the corrected WAN/port layout:
+
+```text
+                            [ EVE-NG upstream / pnet0 cloud ]
+                                   |                  |
+                               HQ-R1 ether4       HQ-R2 ether4
+                                   |                  |
+                              [ HQ-R1 ]          [ HQ-R2 ]
+                          VRRP primary (150)   VRRP backup (100)
+                               | ether1            | ether1
+                               v                   v
+                           [ CORE-SW1 ] ===== [ CORE-SW2 ]
+                           HR / Sales     trunk   IT / Server / Mgmt
+                           VLAN 10,20            VLAN 30,40,50
+                               |                      |
+                              / \                    / \
+               Area 0 WAN #1/#2 \                  / Area 0 WAN #3/#4
+                             [ BR1-R1 ]      [ BR2-R1 ]
+                              | ether1        | ether1
+                           [ BR1-SW1 ]     [ BR2-SW1 ]
+                              | VLAN110       | VLAN210
+                          Branch 1 PCs     Branch 2 PCs
+```
+
+All four HQ-to-branch WAN links run OSPF Area 0 in the revised configuration. Branch user networks belong to passive Area 10 and Area 20, respectively. The `.unl` file is authoritative for physical cabling; this sketch is a conceptual view. Printer VLANs 60, 120 and 220 remain planned only.
+
 
 > This is a logical overview. The [EVE-NG `.unl` file](lab/Enterprise_Multi_Branch_Network.unl) is authoritative for port-level cabling. VLANs 60, 120 and 220 are documented as planned printer networks, **not configured endpoints** in the exported lab.
 
@@ -148,23 +176,24 @@ The entire infrastructure lifecycle is broken down into structured technical mod
 
 ---
 
-## 📊 EVE-NG Validation Results — Original Lab
+## 📊 Infrastructure Validation Status Summary Matrix
 
-The original EVE-NG implementation was tested. The table below distinguishes observed screenshot evidence from the updated-script retest; it does not claim an unmeasured SLA.
+The original EVE-NG project was tested by the author. These records summarize **what the screenshots actually show** and which updated-build tests remain outstanding; this is not a measured production SLA.
 
-| Test area | What the original screenshots show | Revised configuration |
-| :--- | :--- | :--- |
-| VLANs / inter-VLAN | [Successful VPCS pings](images/testing/vlan-verification.png) | Port mapping changed; retest needed |
-| DHCP | [DORA and bound leases](images/phase-05/dhcp-lease-verification.png) | `.254` gateway and split pools need retest |
-| OSPF / branch routing | [Full neighbor and dynamic routes](images/phase-06/ospf-neighbor-verification.png) | Four WAN Area 0 sessions need retest |
-| Internet / NAT | [8.8.8.8 ping](images/phase-07/internet-connectivity-test.png), [masquerade rule](images/phase-07/source-nat-configuration.png) | New HQ-R2 WAN/NAT path needs retest |
-| Firewall | [Blocked HR→IT ping](images/testing/firewall-test.png), [drop rule counters](images/phase-08/firewall-rule-validation.png) | Both-router policy needs retest |
-| VRRP | [Master/Backup](images/phase-09/master-backup-status.png), [takeover](images/phase-09/vrrp-failover-test.png), [recovery](images/phase-09/vrrp-recovery-verification.png) | Corrected priorities/VIPs and packet-loss timing need retest |
-| SSH | [Successful management login](images/phase-10/ssh-login-verification.png) | Updated SSH allowlist needs retest |
-| Syslog | [Linux collector receiving traffic](images/phase-11/syslog-validation.png) | Linux VM not packaged in edited `.unl` |
-| NTP | [Router synchronized status](images/phase-12/time-synchronization-verification.png) | Corrected NTP paths and clock accuracy need retest |
+| Target Verification Control Item | Mapped Infrastructure Component | Original EVE-NG Test Evidence | October 2026 Updated Configuration |
+| :--- | :--- | :--- | :--- |
+| **Layer 2 Segmentation** | Bridge VLAN filtering | ✅ [VLAN reachability and VPCS responses](images/testing/vlan-verification.png) | Port map realigned to `.unl`; runtime retest needed |
+| **Inter-VLAN Forwarding** | Router-on-a-stick | ✅ [Successful cross-VLAN pings](images/phase-04/inter-vlan-connectivity-test.png) | `.254` gateway behavior needs a new test |
+| **Dynamic Addressing** | DHCP pools and clients | ✅ [DORA and bound DHCP leases](images/phase-05/dhcp-lease-verification.png) | Split HQ scopes and virtual gateway need retest |
+| **Dynamic Path Propagation** | Multi-area OSPF | ✅ [Full neighbor and learned routes](images/phase-06/ospf-neighbor-verification.png) | Four corrected Area 0 WAN links need retest |
+| **Border Egress Translation** | Source NAT / Internet access | ✅ [Internet ping](images/phase-07/internet-connectivity-test.png), [masquerade rule](images/phase-07/source-nat-configuration.png) | HQ-R2 egress and failover NAT need retest |
+| **Control Plane Security** | Stateful firewall / ACLs | ✅ [HR→IT denied traffic](images/testing/firewall-test.png), [drop counters](images/phase-08/firewall-rule-validation.png) | Full deny/permit policy on both gateways needs retest |
+| **Gateway Cluster Redundancy** | VRRP Master / Backup | ✅ [Takeover](images/phase-09/vrrp-failover-test.png) and [recovery](images/phase-09/vrrp-recovery-verification.png) captured | New VRRP settings and exact packet-loss timing need retest |
+| **Management Hardening** | SSH | ✅ [Administrative SSH session](images/phase-10/ssh-login-verification.png) | Current allowlist and denied-source test pending |
+| **Telemetry Aggregation** | Remote Syslog | ✅ [Linux collector and UDP capture](images/phase-11/syslog-validation.png) | Informational logging restored in source; service VM/test still needed |
+| **Time Synchronization** | NTP client / server | ✅ [RouterOS synchronized status](images/phase-12/time-synchronization-verification.png) | Rebuild with Linux service VM; verify actual clock offsets |
 
-**Evidence detail:** [79 screenshot archive](docs/EVE-NG-TEST-EVIDENCE.md) · [Full original test walkthrough](docs/Testing-and-Validation.md) · [Acceptance criteria for the revised build](docs/REBUILD-AND-ACCEPTANCE.md)
+See the [annotated register of 79 screenshots](docs/EVE-NG-TEST-EVIDENCE.md) for limitations and version differences, and the [rebuild checklist](docs/REBUILD-AND-ACCEPTANCE.md) for live retesting.
 
 ---
 
