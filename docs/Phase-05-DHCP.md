@@ -1,5 +1,7 @@
 # Phase 05 — DHCP
 
+**Original EVE-NG test:** [DORA output](../images/testing/dhcp-test.png) and [bound DHCP leases](../images/phase-05/dhcp-lease-verification.png) show clients receiving addresses. The original screenshot uses a gateway ending in `.1`; the later `.254` VRRP gateway and split-scope redundancy require a fresh test.
+
 HQ DHCP is deliberately split between the two gateways. Both advertise the same per-VLAN default gateway VIP ending in `.254`, but they lease from disjoint ranges.
 
 | VLAN | HQ-R1 pool | HQ-R2 pool |
@@ -23,4 +25,4 @@ Useful commands:
 /ip dhcp-server lease print
 ```
 
-Renew two hosts in each VLAN, inspect their subnet/gateway, then shut down HQ-R1's DHCP service and test a new lease from HQ-R2. **These runtime cases are pending.**
+Renew two hosts in each VLAN, inspect their subnet/gateway, then shut down HQ-R1's DHCP service and test a new lease from HQ-R2. **These revised DHCP failover cases are still pending; the original DHCP assignment test was completed in EVE-NG.**

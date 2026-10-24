@@ -1,11 +1,11 @@
-> **October 2026 revision note:** This page is retained from the original lab build. Its screenshots and sample command output are historical; they are not the acceptance result for the revised `configs/*.rsc` files. Use [the current test checklist](REBUILD-AND-ACCEPTANCE.md) and [design decisions](NETWORK-DECISIONS.md) for source-level expectations.
+> **Original EVE-NG work:** This phase was implemented as part of the author's actual EVE-NG lab and is supported by the [EVE-NG topology](../images/phase-01/eve-ng-topology.png) screenshot. The screenshots and phase narrative record the original tested project. The October 2026 configuration refresh has not been rerun in EVE-NG; its current settings are in [the config set](../configs/README.md) and [test register](EVE-NG-TEST-EVIDENCE.md).
 
 # 🏢 Project Overview – Enterprise Multi-Branch Network with High Availability
 
 ## 📌 Introduction
-This project showcases the architectural design, implementation, and verification of a highly resilient, enterprise-grade multi-branch network infrastructure simulated inside an **EVE-NG** network emulation platform using **MikroTik RouterOS Cloud Hosted Routers (CHR)**[cite: 1, 2]. 
+This project showcases the architectural design, implementation, and verification of a highly resilient, enterprise-grade multi-branch network infrastructure simulated inside an **EVE-NG** network emulation platform using **MikroTik RouterOS Cloud Hosted Routers (CHR)**. 
 
-The production-ready simulation maps a corporate blueprint comprising a centralized **Headquarters (HQ)** and two geographically distributed remote branches interconnected over a redundant Type-2 transport WAN backbone. Designed in accordance with industry best practices, the network incorporates strategic segmentation, automated resource provisioning, dynamic scaling, robust border translation, strict firewall filter chains, high availability failover mechanisms, and centralized out-of-band logging and clock synchronization services.
+The enterprise lab simulation models a corporate blueprint comprising a centralized **Headquarters (HQ)** and two geographically distributed remote branches interconnected over a redundant Type-2 transport WAN backbone. Designed in accordance with industry best practices, the network incorporates strategic segmentation, automated resource provisioning, dynamic scaling, robust border translation, strict firewall filter chains, high availability failover mechanisms, and centralized out-of-band logging and clock synchronization services.
 
 ---
 
@@ -35,8 +35,8 @@ The network architecture is physically partitioned into three operational infras
 The headquarters acts as the authoritative core routing hub, dynamic area boundary, central internet egress zone, and hosting platform for shared corporate application layers.
 
 * **Core Routing Node Engine:** `HQ-R1` (VRRP Master) and `HQ-R2` (VRRP Backup).
-* **Switching Infrastructure:** `CORE-SW1` and `CORE-SW2` interconnected via a local cross-chassis trunk line[cite: 1, 2].
-* **Centralized Application Assets:** Deployed inside a dedicated Server Segment, including the `File-SERVER` and the consolidated `SYSLOG-SERVER` / `NTP-SERVER` asset[cite: 1, 2].
+* **Switching Infrastructure:** `CORE-SW1` and `CORE-SW2` interconnected via a local cross-chassis trunk line.
+* **Centralized Application Assets:** Deployed inside a dedicated Server Segment, including the `File-SERVER` and the consolidated `SYSLOG-SERVER` / `NTP-SERVER` asset.
 * **Department User Profiles:** Structured into 4 core functional departments:
   * **HR Department:** 20 Target End Users.
   * **Sales Department:** 20 Target End Users.
@@ -57,18 +57,18 @@ A secondary distributed site structurally mirroring Branch-1 to validate cross-s
 
 ## 🛠️ Network Inventory Architecture
 
-The physical node layout and interface links configured within the EVE-NG topology schema conform to the following asset mapping structure[cite: 1, 2]:
+The physical node layout and interface links configured within the EVE-NG topology schema conform to the following asset mapping structure:
 
 | Site Location | Node Name | Emulator Node Type | OS Image Version | Physical Interface Link Interconnections |
 | :--- | :--- | :--- | :--- | :--- |
-| **HQ** | `HQ-R1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `CORE-SW1 eth1` \| `eth2` ↔ `BR1-R1 eth2` \| `eth3` ↔ `BR2-R1 eth2` \| `eth4` ↔ `Cloud0 (NAT)`[cite: 1, 2] |
-| **HQ** | `HQ-R2` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `CORE-SW2 eth1` \| `eth2` ↔ `BR1-R1 eth3` \| `eth3` ↔ `BR2-R1 eth3`[cite: 1, 2] |
-| **HQ** | `CORE-SW1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `HQ-R1 eth1` \| `eth2` ↔ `CORE-SW2 eth2` \| `eth3` ↔ `HR-PCs` \| `eth4` ↔ `Sales-PCs`[cite: 1, 2] |
-| **HQ** | `CORE-SW2` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `HQ-R2 eth1` \| `eth2` ↔ `CORE-SW1 eth2` \| `eth3` ↔ `Server-VLAN (Assets)`[cite: 1, 2] |
-| **Branch-1** | `BR1-R1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR1-SW1 eth1` \| `eth2` ↔ `HQ-R1 eth2` \| `eth3` ↔ `HQ-R2 eth2`[cite: 1, 2] |
-| **Branch-1** | `BR1-SW1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR1-R1 eth1` \| `eth2/eth3` ↔ `Branch Endpoints`[cite: 1, 2] |
-| **Branch-2** | `BR2-R1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR2-SW1 eth1` \| `eth2` ↔ `HQ-R1 eth3` \| `eth3` ↔ `HQ-R2 eth3`[cite: 1, 2] |
-| **Branch-2** | `BR2-SW1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR2-R1 eth1` \| `eth2` ↔ `Branch Endpoints`[cite: 1, 2] |
+| **HQ** | `HQ-R1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `CORE-SW1 eth1` \| `eth2` ↔ `BR1-R1 eth2` \| `eth3` ↔ `BR2-R1 eth2` \| `eth4` ↔ `Cloud0 (NAT)` |
+| **HQ** | `HQ-R2` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `CORE-SW2 eth1` \| `eth2` ↔ `BR1-R1 eth3` \| `eth3` ↔ `BR2-R1 eth3` |
+| **HQ** | `CORE-SW1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `HQ-R1 eth1` \| `eth2` ↔ `CORE-SW2 eth2` \| `eth3` ↔ `HR-PCs` \| `eth4` ↔ `Sales-PCs` |
+| **HQ** | `CORE-SW2` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `HQ-R2 eth1` \| `eth2` ↔ `CORE-SW1 eth2` \| `eth3` ↔ `Server-VLAN (Assets)` |
+| **Branch-1** | `BR1-R1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR1-SW1 eth1` \| `eth2` ↔ `HQ-R1 eth2` \| `eth3` ↔ `HQ-R2 eth2` |
+| **Branch-1** | `BR1-SW1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR1-R1 eth1` \| `eth2/eth3` ↔ `Branch Endpoints` |
+| **Branch-2** | `BR2-R1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR2-SW1 eth1` \| `eth2` ↔ `HQ-R1 eth3` \| `eth3` ↔ `HQ-R2 eth3` |
+| **Branch-2** | `BR2-SW1` | QEMU Appliance | RouterOS v7.21.4 | `eth1` ↔ `BR2-R1 eth1` \| `eth2` ↔ `Branch Endpoints` |
 
 ---
 
@@ -96,5 +96,5 @@ The logical design relies on a multi-layered implementation matrix to govern all
 ---
 
 ## 🎯 Project Phase Outcome
-This project successfully transitions from abstract business requirements to an operational, automated enterprise network lab environment. By running validated deployment scripts across the custom EVE-NG topology blueprint, the infrastructure actively delivers low-latency inter-vlan routing, dynamic path updates during link failure states, transparent internet access, and comprehensive out-of-band monitoring collection[cite: 1, 2]. The resulting framework forms a clean, production-ready portfolio case study demonstrating real-world network engineering and system administration concepts using MikroTik RouterOS v7 platforms.
+This project successfully transitions from abstract business requirements to an operational, automated enterprise network lab environment. By running validated deployment scripts across the custom EVE-NG topology blueprint, the infrastructure actively delivers low-latency inter-vlan routing, dynamic path updates during link failure states, transparent internet access, and comprehensive out-of-band monitoring collection. The resulting framework forms a clean, production-ready portfolio case study demonstrating real-world network engineering and system administration concepts using MikroTik RouterOS v7 platforms.
 ```

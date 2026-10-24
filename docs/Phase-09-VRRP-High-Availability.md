@@ -1,5 +1,7 @@
 # Phase 09 — HQ virtual gateway redundancy
 
+**Original EVE-NG test:** The screenshots show [HQ-R1 Master / HQ-R2 Backup](../images/phase-09/master-backup-status.png), [HQ-R2 taking over](../images/phase-09/vrrp-failover-test.png) after HQ-R1's interface was disabled, and [role recovery](../images/phase-09/vrrp-recovery-verification.png). The original Master output uses priority 255; the corrected 150/100 scripts have not been rerun, and packet-loss timing was not captured.
+
 HQ-R1 and HQ-R2 share the same VRID set (10, 20, 30, 40, 50) and virtual gateway addresses ending `.254`. HQ-R1 uses priority **150**, HQ-R2 priority **100**. VRRP virtual IPs are **/32**, while router physical VLAN addresses retain /24 subnet masks.
 
 These values avoid the old non-owner `priority=255` and `.254/24` settings. The VRRP and physical address assignments are in the current [HQ-R1](../configs/HQ-R1.rsc) and [HQ-R2](../configs/HQ-R2.rsc) exports.
@@ -21,4 +23,4 @@ With both routers healthy, expect HQ-R1 to own each VIP and HQ-R2 to be Backup. 
 
 Do not label the design zero-loss, hitless or session-preserving. Use the [acceptance checklist](REBUILD-AND-ACCEPTANCE.md) and save timestamped failure/recovery measurements.
 
-**Status:** Script-level redundancy improved; live takeover and loss metrics remain unverified.
+**October 2026 revision status:** Original VRRP takeover/recovery was tested and photographed in EVE-NG. Revised VRRP settings and loss metrics remain unverified.

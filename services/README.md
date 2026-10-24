@@ -1,6 +1,6 @@
 # Syslog and NTP reference for the lab
 
-The existing EVE-NG topology uses a VPCS node labeled `SYSLOG-SERVER` on VLAN 40. VPCS is useful for reachability checks, but it is **not** a Syslog or NTP server.
+The original EVE-NG project includes [Linux Syslog reception screenshots](../images/phase-11/monitoring-dashboard.png) and a [RouterOS NTP synchronized-status screenshot](../images/phase-12/time-synchronization-verification.png), documenting those earlier service exercises. The **current exported** EVE-NG topology, however, contains a VPCS node labeled `SYSLOG-SERVER` on VLAN 40. VPCS is useful for reachability checks but is **not** a Syslog or NTP service. To reproduce the original service exercise on the revised build, a Linux VM must be attached again.
 
 To validate those features, replace the placeholder or attach a proper Debian/Ubuntu Linux VM to CORE-SW2 ether7 (VLAN 40). Set a **static** address:
 

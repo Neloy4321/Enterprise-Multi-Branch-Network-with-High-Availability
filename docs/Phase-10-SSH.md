@@ -1,5 +1,7 @@
 # Phase 10 — SSH management baseline
 
+**Original EVE-NG test:** A [management workstation successfully logged into HQ-R1 over SSH](../images/phase-10/ssh-login-verification.png) and ran `/system resource print`. That historical screenshot displays RouterOS 7.12; this revised config targets 7.21.4 and needs fresh allow/deny testing.
+
 The revised RouterOS scripts disable unused management services and limit SSH to IT and management sources (`172.16.30.0/24`, `172.16.50.0/24`). No login credentials are committed.
 
 After deploying to clean routers, create a named personal administrative account through a secure console or your organization’s credential-management procedure, then test key-based or otherwise appropriately secured SSH access. Do not reuse a shared demo password.
@@ -12,4 +14,4 @@ After deploying to clean routers, create a named personal administrative account
 
 Confirm access from the approved ADMIN/IT subnet, and denial from Sales, HR and branch-user subnets. MAC Winbox/MAC server and neighbor discovery are disabled to reduce unintended L2 management exposure.
 
-**Status:** Configuration policy present; successful SSH key authentication and negative connection tests await EVE-NG execution. Out-of-band hardware management and centralized AAA are not deployed.
+**October 2026 revision status:** Original SSH login succeeded in EVE-NG. The revised key-authentication and denied-source tests await a new run. Out-of-band hardware management and centralized AAA are not deployed.

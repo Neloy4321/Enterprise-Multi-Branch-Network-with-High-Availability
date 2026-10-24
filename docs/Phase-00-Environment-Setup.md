@@ -1,4 +1,4 @@
-> **October 2026 revision note:** This page is retained from the original lab build. Its screenshots and sample command output are historical; they are not the acceptance result for the revised `configs/*.rsc` files. Use [the current test checklist](REBUILD-AND-ACCEPTANCE.md) and [design decisions](NETWORK-DECISIONS.md) for source-level expectations.
+> **Original EVE-NG work:** This phase was implemented as part of the author's actual EVE-NG lab and is supported by the [EVE-NG dashboard](../images/phase-00/eve-ng-dashboard.png) screenshot. The screenshots and phase narrative record the original tested project. The October 2026 configuration refresh has not been rerun in EVE-NG; its current settings are in [the config set](../configs/README.md) and [test register](EVE-NG-TEST-EVIDENCE.md).
 
 # 🚀 Phase 00 – Environment Setup & Emulation Deployments
 

@@ -1,5 +1,7 @@
 # Phase 06 — OSPF multi-area routing
 
+**Original EVE-NG test:** [OSPF neighbor output](../images/phase-06/ospf-neighbor-verification.png) shows a Full adjacency; [dynamic routes](../images/phase-06/routing-table-verification.png) and a [branch-subnet ping](../images/testing/ospf-test.png) were also captured. The revised four-link Area 0 alignment still needs its own runtime verification.
+
 The four numbered WAN links are point-to-point. Their area is **Area 0 on both sides**; unequal area IDs prevent OSPF neighbors from forming.
 
 | Link | HQ side | Branch side | Area |
@@ -32,4 +34,4 @@ On all four routers:
 
 Expected: four distinct HQ↔branch adjacencies in Full state across the physical links and learned routes for both branch client subnets. Tests must be repeated with each WAN link disabled independently.
 
-**Status:** Source area mismatch corrected. The previous "Full" neighbors shown in older documents are not accepted as proof of the new configuration.
+**October 2026 revision status:** Area mismatch corrected in source. The earlier Full neighbor screenshot is valid evidence of the original EVE-NG test, but does not certify the edited four-link setup.

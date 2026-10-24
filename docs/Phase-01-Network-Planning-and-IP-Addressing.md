@@ -1,4 +1,4 @@
-> **October 2026 revision note:** This page is retained from the original lab build. Its screenshots and sample command output are historical; they are not the acceptance result for the revised `configs/*.rsc` files. Use [the current test checklist](REBUILD-AND-ACCEPTANCE.md) and [design decisions](NETWORK-DECISIONS.md) for source-level expectations.
+> **Original EVE-NG work:** This phase was implemented as part of the author's actual EVE-NG lab and is supported by the [topology canvas](../images/phase-01/eve-ng-topology.png) screenshot. The screenshots and phase narrative record the original tested project. The October 2026 configuration refresh has not been rerun in EVE-NG; its current settings are in [the config set](../configs/README.md) and [test register](EVE-NG-TEST-EVIDENCE.md).
 
 # 📂 Phase 01 – Enterprise Network Planning & IP Addressing
 
@@ -9,7 +9,7 @@ The primary objective of this phase was to construct a scalable, deterministic, 
 
 # 🏢 Project Blueprint Overview
 
-This architecture simulates a high-availability corporate infrastructure spanning a centralized **Headquarters (HQ)** and two geographically isolated **Remote Branch Offices** linked via point-to-point transit WAN layers. The planning matrix aligns directly with modern enterprise network design rules: maximizing infrastructure reliability, implementing zero-trust zone segmentation, and securing internal management perimeters.
+This architecture simulates a high-availability corporate infrastructure spanning a centralized **Headquarters (HQ)** and two geographically isolated **Remote Branch Offices** linked via point-to-point transit WAN layers. The planning matrix aligns directly with modern enterprise network design rules: maximizing infrastructure reliability, implementing VLAN-based zone segmentation, and securing internal management perimeters.
 
 ### Core Enterprise Architecture Blocks:
 * **Resilient Edge Hub:** Dual-homed core architecture using active/backup default gateway redundancy.
@@ -48,7 +48,7 @@ The enterprise framework is built around a classic tree-hierarchical structure. 
 
 #### Figure 2. EVE-NG Production Topology Layout
 ![EVE-NG Lab Topology](../images/phase-01/eve-ng-topology.png)
-*The active simulated hardware node deployment grid executed inside the EVE-NG canvas workspace[cite: 1, 2].*
+*The active simulated hardware node deployment grid executed inside the EVE-NG canvas workspace.*
 
 ---
 
@@ -58,8 +58,8 @@ The enterprise framework is built around a classic tree-hierarchical structure. 
 | :--- | :--- | :--- | :--- |
 | **HQ-R1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | VRRP Master Gateway / Border NAT / OSPF Backbone Node |
 | **HQ-R2** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | VRRP Backup Gateway / Redundant OSPF Core Transit Node |
-| **CORE-SW1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | HQ L2 Core Switch 1 (HR, Sales, IT Access Processing)[cite: 1, 2] |
-| **CORE-SW2** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | HQ L2 Core Switch 2 (Server Farms & Management Anchors)[cite: 1, 2] |
+| **CORE-SW1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | HQ L2 Core Switch 1 (HR, Sales, IT Access Processing) |
+| **CORE-SW2** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | HQ L2 Core Switch 2 (Server Farms & Management Anchors) |
 | **BR1-R1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-1 Gateway / OSPF Area 10 Border Router |
 | **BR1-SW1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-1 Local L2 Access Distribution Switch |
 | **BR2-R1** | MikroTik Cloud Hosted Router | RouterOS v7.21.4 | Branch-2 Gateway / OSPF Area 20 Border Router |
@@ -74,24 +74,24 @@ To maintain structural symmetry across the dual-homed layout, the core links and
 
 | Source Node | Source Interface | Destination Node | Destination Interface | Operational Link Classification |
 | :--- | :--- | :--- | :--- | :--- |
-| **HQ-R1** | `ether1` | **CORE-SW1** | `ether1` | HQ Core Trunk Link (VLAN 10,20,30,40,50)[cite: 1, 2] |
+| **HQ-R1** | `ether1` | **CORE-SW1** | `ether1` | HQ Core Trunk Link (VLAN 10,20,30,40,50) |
 | **HQ-R1** | `ether2` | **BR1-R1** | `ether2` | Redundant WAN Link (WAN-01 Subnet) |
 | **HQ-R1** | `ether3` | **BR2-R1** | `ether2` | Redundant WAN Link (WAN-02 Subnet) |
-| **HQ-R1** | `ether4` | **Cloud0** | `pnet0` | Edge WAN Gateway Internet Egress Connection[cite: 1, 2] |
-| **HQ-R2** | `ether1` | **CORE-SW2** | `ether1` | Redundant HQ Core Trunk Link[cite: 1, 2] |
+| **HQ-R1** | `ether4` | **Cloud0** | `pnet0` | Edge WAN Gateway Internet Egress Connection |
+| **HQ-R2** | `ether1` | **CORE-SW2** | `ether1` | Redundant HQ Core Trunk Link |
 | **HQ-R2** | `ether2` | **BR1-R1** | `ether3` | Redundant WAN Link (WAN-03 Subnet) |
 | **HQ-R2** | `ether3` | **BR2-R1** | `ether3` | Redundant WAN Link (WAN-04 Subnet) |
-| **CORE-SW1**| `ether2` | **CORE-SW2** | `ether2` | Inter-Switch Core Trunk Backbone Link[cite: 1, 2] |
-| **CORE-SW1**| `ether3` | **HR-PC1 / PC2**| `eth0` | Access Port Map: VLAN 10 (HR Subnet)[cite: 1, 2] |
-| **CORE-SW1**| `ether4` | **SALES-PC1/PC2**| `eth0` | Access Port Map: VLAN 20 (Sales Subnet)[cite: 1, 2] |
-| **CORE-SW1**| `ether5` | **IT-PC1 / PC2**| `eth0` | Access Port Map: VLAN 30 (IT Admin Subnet)[cite: 1, 2] |
-| **CORE-SW2**| `ether3` | **File-SERVER** | `eth0` | Access Port Map: VLAN 40 (Production Server)[cite: 1, 2] |
-| **CORE-SW2**| `ether4` | **ADMIN-PC** | `eth0` | Access Port Map: VLAN 50 (Management Subnet)[cite: 1, 2] |
-| **CORE-SW2**| `ether7` | **SYSLOG-SERVER**| `eth0` | Access Port Map: VLAN 40 (Monitoring Server)[cite: 1, 2] |
-| **BR1-R1** | `ether1` | **BR1-SW1** | `ether1` | Branch-1 Local Trunk Link (VLAN 110)[cite: 1, 2] |
-| **BR1-SW1** | `ether2/ether3`| **BR1-PC1 / PC2**| `eth0` | Access Port Map: VLAN 110 (Branch Users)[cite: 1, 2] |
-| **BR2-R1** | `ether1` | **BR2-SW1** | `ether1` | Branch-2 Local Trunk Link (VLAN 210)[cite: 1, 2] |
-| **BR2-SW1** | `ether2` | **BR2-PC1 / PC2**| `eth0` | Access Port Map: VLAN 210 (Branch Users)[cite: 1, 2] |
+| **CORE-SW1**| `ether2` | **CORE-SW2** | `ether2` | Inter-Switch Core Trunk Backbone Link |
+| **CORE-SW1**| `ether3` | **HR-PC1 / PC2**| `eth0` | Access Port Map: VLAN 10 (HR Subnet) |
+| **CORE-SW1**| `ether4` | **SALES-PC1/PC2**| `eth0` | Access Port Map: VLAN 20 (Sales Subnet) |
+| **CORE-SW1**| `ether5` | **IT-PC1 / PC2**| `eth0` | Access Port Map: VLAN 30 (IT Admin Subnet) |
+| **CORE-SW2**| `ether3` | **File-SERVER** | `eth0` | Access Port Map: VLAN 40 (Production Server) |
+| **CORE-SW2**| `ether4` | **ADMIN-PC** | `eth0` | Access Port Map: VLAN 50 (Management Subnet) |
+| **CORE-SW2**| `ether7` | **SYSLOG-SERVER**| `eth0` | Access Port Map: VLAN 40 (Monitoring Server) |
+| **BR1-R1** | `ether1` | **BR1-SW1** | `ether1` | Branch-1 Local Trunk Link (VLAN 110) |
+| **BR1-SW1** | `ether2/ether3`| **BR1-PC1 / PC2**| `eth0` | Access Port Map: VLAN 110 (Branch Users) |
+| **BR2-R1** | `ether1` | **BR2-SW1** | `ether1` | Branch-2 Local Trunk Link (VLAN 210) |
+| **BR2-SW1** | `ether2` | **BR2-PC1 / PC2**| `eth0` | Access Port Map: VLAN 210 (Branch Users) |
 
 ---
 
@@ -152,9 +152,9 @@ Phase 00: Environment Prep ──> Phase 03: Bridge VLANs ──> Phase 05: DHCP
 | Target Validation Control Item | Planning Status | Architectural Notes |
 | :--- | :--- | :--- |
 | Core Corporate Scalability Specifications Defined | ✅ Approved | All system user limits and scope footprints validated. |
-| Dual-Homed Workspace Topology Mapped | ✅ Approved | Link redundancy maps fully verified within EVE-NG[cite: 1, 2]. |
+| Dual-Homed Workspace Topology Mapped | ✅ Approved | Link redundancy maps fully verified within EVE-NG. |
 | High-Availability /30 WAN Plan Structured | ✅ Approved | Complete transport network matrix fully calculated. |
-| Explicit 802.1Q Bridge VLAN Scheme Mapped | ✅ Approved | Logical broadcast groups assigned matching octets[cite: 1, 2]. |
+| Explicit 802.1Q Bridge VLAN Scheme Mapped | ✅ Approved | Logical broadcast groups assigned matching octets. |
 | Stateful Firewall & Service Hardening Outlined | ✅ Approved | Input and Forward filtration chains cleanly defined. |
 | Centralized Syslog & NTP Server Strategy Ready | ✅ Approved | Management zone pointers anchored at `172.16.40.201`. |
 

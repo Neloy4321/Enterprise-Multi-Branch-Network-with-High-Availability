@@ -1,5 +1,7 @@
 # Phase 07 — Internet path and NAT
 
+**Original EVE-NG test:** An [HR VPCS received five replies from 8.8.8.8](../images/phase-07/internet-connectivity-test.png), and HQ-R1's [masquerade rule](../images/phase-07/source-nat-configuration.png) was captured. This is original connectivity evidence; the added HQ-R2 WAN/NAT path has not been retested.
+
 Both HQ routers now have an `ether4` connection to the EVE-NG management cloud. Each uses an independent DHCP client to learn a default route and address. Each has a source NAT masquerade rule for the corporate `172.16.0.0/16` space.
 
 ```routeros
@@ -19,4 +21,4 @@ Live test sequence:
 4. Record time to first successful request and whether old sessions reset.
 5. Restore HQ-R1 and repeat.
 
-**Status:** Revised configs available; WAN reachability and failover are not yet measured.
+**October 2026 revision status:** Earlier EVE-NG Internet connectivity is documented; revised dual-uplink behavior and failover have not been measured.

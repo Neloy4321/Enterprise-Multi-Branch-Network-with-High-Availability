@@ -1,5 +1,7 @@
 # Phase 03 — VLAN configuration
 
+**Original EVE-NG test:** VLANs and cross-VLAN host reachability were exercised successfully; see [VPCS VLAN pings](../images/testing/vlan-verification.png) and [inter-VLAN test](../images/testing/inter-vlan-test.png). The October 2026 access-port alignment is a newer change and has not been boot-tested.
+
 The current Layer-2 source is the four `configs/*SW1.rsc` files. These bridge scripts use tagged trunks, explicit PVIDs and `ingress-filtering=yes` with suitable `frame-types`. Each switch starts with `vlan-filtering=no`, programs its ports and VLAN table, then enables filtering.
 
 ## EVE-NG access-port map
@@ -28,4 +30,4 @@ VLAN 60, 120 and 220 are reserved in the plan but **not present in this build**.
 
 The original port mapping was inconsistent with the actual `.unl` endpoint cables (notably Sales/IT and the second Branch-2 client). The revised scripts use the exported wiring. This correction is statically checked but has not been boot-tested.
 
-Historical screenshots are under `images/phase-03/`; do not reuse them as acceptance evidence for this revision.
+The [original VLAN screenshots](../images/phase-03/vlan-verification.png) remain evidence of the earlier EVE-NG testing; they are not a boot-test of the revised port map.

@@ -1,6 +1,6 @@
 # EVE-NG lab import
 
-The export `Enterprise_Multi_Branch_Network.unl` describes **21 nodes**: eight RouterOS CHR nodes and thirteen VPCS endpoints. It captures wiring, not a running configuration or server VM.
+The original enterprise lab was **deployed and tested in EVE-NG**; the [lab canvas](../images/phase-01/eve-ng-topology.png) and [test screenshots](../docs/EVE-NG-TEST-EVIDENCE.md) document that work. The later `Enterprise_Multi_Branch_Network.unl` export describes **21 nodes**: eight RouterOS CHR nodes and thirteen VPCS endpoints. The `.unl` captures the cable map, not the original live router state or the Linux collector shown in historical service screenshots.
 
 ## Requirements
 
@@ -51,4 +51,4 @@ CORE-SW1 ether3/4 serve HR, ether5/6 Sales. CORE-SW2 ether3/4 serve IT, ether5 A
 - `SYSLOG-SERVER` is currently a **VPCS placeholder**; it cannot collect Syslog or serve NTP.
 - Both router uplinks share the **same** EVE host management cloud. That is path diversity at the router level, not independent upstream ISP diversity.
 - This file is a topology export; it does not embed saved RouterOS configurations.
-- This revised topology has not been boot-tested after the October 2026 source edits.
+- The **original** EVE-NG network was run and tested; the **October 2026 revised** `.unl` has not been boot-tested after the source edits.

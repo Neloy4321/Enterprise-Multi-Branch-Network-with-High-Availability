@@ -1,10 +1,10 @@
 # Enterprise Multi-Branch Network Lab
 
-A three-site enterprise network designed for **MikroTik RouterOS v7** in **EVE-NG Community Edition**. It combines HQ departmental VLANs, two branches, OSPF multi-area routing, redundant HQ gateways, baseline firewall policy, DHCP, and planned centralized logging.
+**Designed, built and tested by Neloy Pramanik Supto in EVE-NG**, using MikroTik RouterOS CHR. The original three-site lab has 79 screenshots covering setup, topology, VLANs, DHCP, routing, Internet access, firewall behavior, VRRP takeover/recovery, SSH and the logging/time-service exercises.
 
-![Topology](topology/Enterprise-Network.png)
+The project also includes an **October 2026 maintenance revision** of the exported lab topology and eight configuration scripts. Those changes were checked against the topology and by an automated static checker, but have **not yet been re-imported and retested in EVE-NG**. The [original EVE-NG test evidence](docs/EVE-NG-TEST-EVIDENCE.md) and the [revision acceptance checklist](docs/REBUILD-AND-ACCEPTANCE.md) are deliberately kept separate.
 
-> **Current state (24 October 2026):** The exported lab topology and RouterOS configuration set have been reconciled in source control. Static consistency checks can run without EVE-NG. **Live RouterOS import, connectivity, security and failure-recovery tests have not been rerun.** Screenshots in `images/` are retained as earlier lab records; they do not prove this revised configuration.
+![EVE-NG project topology](images/phase-01/eve-ng-topology.png)
 
 ## Network at a glance
 
@@ -27,7 +27,8 @@ The four WAN interfaces at each branch and HQ use OSPF Area 0. Each branch adver
 - [Design decisions and limitations](docs/NETWORK-DECISIONS.md)
 - [Static audit checker](tools/lint_lab.py)
 - [Linux logging and time-service reference](services/README.md)
-- [Testing log / results template](docs/Testing-and-Validation.md)
+- [EVE-NG screenshots and observed test results](docs/EVE-NG-TEST-EVIDENCE.md)
+- [Testing and validation summary: original run versus revised configuration](docs/Testing-and-Validation.md)
 - [Historical phase walkthroughs](docs/Phase-00-Project-Overview.md)
 - [Troubleshooting notes](docs/Troubleshooting.md)
 
@@ -51,7 +52,7 @@ The four WAN interfaces at each branch and HQ use OSPF Area 0. Each branch adver
 - **Syslog / NTP:** Router configuration points to `172.16.40.201`; actual server processes are not bundled as a running EVE node.
 - **Performance:** No verified throughput, packet-loss, convergence-time or SLA result is claimed for this revision.
 
-The long-form phase guides document design and learning steps. Some pre-revision command/output examples differ from the configuration set. When they conflict, use `configs/*.rsc` and the live acceptance checklist.
+The original lab was implemented and tested in EVE-NG; the screenshots and phase notes are a record of that work. Some screenshots use earlier RouterOS versions, addressing or gateway settings than the October revision. When rebuilding the revised branch, use `configs/*.rsc` and the acceptance checklist, then capture a fresh test run. See the [side-by-side evidence register](docs/EVE-NG-TEST-EVIDENCE.md).
 
 ## Static checks
 
@@ -63,7 +64,7 @@ The standard-library checker validates VLAN access ports against the `.unl` cabl
 
 ## Next validation milestone
 
-A live EVE-NG environment is necessary to complete end-to-end proof. The checkboxes and exact router commands are in [the acceptance checklist](docs/REBUILD-AND-ACCEPTANCE.md). Until that work is completed, the project is described as an **enterprise network design and reproducible emulation lab**, not a deployed production network.
+The original EVE-NG test run is documented. A live EVE-NG environment is needed to verify the **newly revised configuration**, not to establish whether this project was ever tested. The checkboxes and exact router commands are in [the acceptance checklist](docs/REBUILD-AND-ACCEPTANCE.md). Until that work is completed, the project is described as an **enterprise network design and reproducible emulation lab**, not a deployed production network.
 
 ## License
 

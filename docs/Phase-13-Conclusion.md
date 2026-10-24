@@ -1,26 +1,31 @@
-# Phase 13 — Rebuild status and next acceptance gate
+# Phase 13 — Original EVE-NG test results and revision status
 
-The enterprise lab consists of two HQ gateways, two core switches, two branch routers, two branch access switches and thirteen VPCS endpoints. The exported EVE-NG topology and RouterOS source files have been reconciled in October 2026.
+The multi-branch network was **built and tested in EVE-NG by the author**. The screenshots show working client communication, DHCP assignment, OSPF adjacency and learned routes, Internet connectivity, firewall enforcement examples, VRRP backup takeover and recovery, SSH access, and Syslog/NTP service exercises. This is a completed emulation project with historical evidence, not an untested proposal.
 
-The historical phase screenshots document earlier development work. They do not prove that the current revisions have been imported and tested in RouterOS.
+![Original lab canvas](../images/phase-01/eve-ng-topology.png)
 
-## What is available
+## Recorded EVE-NG outcomes
 
-- Revised VLAN access/trunk mapping to match the exported `.unl` cable map.
-- Common OSPF Area 0 transit links, with passive local branch area interfaces.
-- HQ gateway VIPs using distinct primary/backup priorities and `/32` virtual IP addresses.
-- Backup HQ external interface in the lab topology, split DHCP scopes, and mirrored outbound NAT/firewall policy.
-- Restrictive router input policy and scoped SSH access.
-- Static source checker and a step-by-step test register.
+- **VLANs and routing:** [client pings across HQ networks](../images/testing/vlan-verification.png), [OSPF Full neighbor](../images/phase-06/ospf-neighbor-verification.png) and [branch ping](../images/phase-13/enterprise-functional-testing.png).
+- **DHCP and Internet:** [bound DHCP leases](../images/phase-05/dhcp-lease-verification.png) and [successful Internet ICMP](../images/phase-07/internet-connectivity-test.png).
+- **Security:** [HR-to-IT traffic denied](../images/phase-08/traffic-filtering-verification.png), [firewall drop rule counters](../images/phase-08/firewall-rule-validation.png) and [SSH administration](../images/phase-10/ssh-login-verification.png).
+- **High availability:** [HQ-R1 initially Master](../images/phase-09/master-backup-status.png), [HQ-R2 takes over](../images/phase-09/vrrp-failover-test.png), [HQ-R1 recovers](../images/phase-09/vrrp-recovery-verification.png).
+- **Infrastructure services:** [Syslog packets and Linux collector](../images/phase-11/syslog-validation.png), [RouterOS NTP synchronized](../images/phase-12/time-synchronization-verification.png).
 
-## Still required
+All 79 project images, evidence limits and version differences are indexed in [EVE-NG implementation and test evidence](EVE-NG-TEST-EVIDENCE.md). Not every network path or fault scenario is covered by those screenshots, and measured convergence timing/packet-loss results are not part of the saved record.
 
-1. Run all eight files on clean RouterOS 7.21.4 CHR instances and record zero import errors.
-2. Verify VLAN assignments, address leases, OSPF neighbors, routes and cross-site reachability.
-3. Simulate primary failure and measure loss, master election and new connection recovery.
-4. Replace the VPCS server placeholder with a genuine Linux Syslog/NTP service.
-5. Complete the negative security cases and retain console logs.
+## October 2026 engineering revision
 
-Do not describe this version as production-ready or zero-downtime. The appropriate project description is **Enterprise Multi-Branch Network Design and EVE-NG Emulation Lab** until live acceptance is complete.
+The `.unl` export and eight `.rsc` files have since been reconciled: Layer-2 port assignments, Area 0 WAN OSPF adjacency definitions, VRRP priorities and `/32` VIPs, dual HQ WAN/NAT paths, split DHCP pools, RouterOS management filters and service configuration paths were revised. The automated source checker has passed.
 
-See [Testing and Validation](Testing-and-Validation.md) and [Rebuild and Acceptance](REBUILD-AND-ACCEPTANCE.md).
+**Only this newer configuration is pending fresh EVE-NG execution.** The original lab's screenshots include different gateway settings, a VRRP priority of 255 and a RouterOS 7.12 console capture. Therefore those results document the original build; they cannot be copied as if they came from the edited scripts.
+
+## Next verification
+
+1. Re-import all eight edited configs and confirm RouterOS accepts them.
+2. Confirm VLAN mapping, DHCP gateways, OSPF Full neighbors and branch routes under the new addresses.
+3. Repeat firewall positive/negative tests on both HQ routers.
+4. Repeat VRRP takeover and recovery, measuring lost packets, recovery time and new NAT sessions.
+5. Attach the Linux Syslog/NTP service VM missing from the exported `.unl` and retain new server-side evidence.
+
+That is the distinction used throughout the repository: **tested original EVE-NG implementation; revised configuration awaiting re-test.** Neither the original screenshots nor the static checker alone establish a production deployment or a zero-loss availability SLA.

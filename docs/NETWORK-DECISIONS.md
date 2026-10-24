@@ -44,6 +44,6 @@ The EVE-NG `SYSLOG-SERVER` is a VPCS host in the original export. It cannot serv
 
 ## Evidence and scope
 
-Old screenshots are retained to preserve the project history. The revised scripts have not been executed in a live EVE-NG session. The CI check is intentionally conservative: it catches stale cables, missing policies and invalid source assertions, but it does not replace a network emulator or RouterOS parser.
+The original enterprise lab was built and **tested in EVE-NG**, with screenshots of DHCP, VLAN reachability, OSPF, firewall, Internet access, VRRP failover/recovery, SSH, Syslog and NTP. The [annotated test evidence](EVE-NG-TEST-EVIDENCE.md) identifies the observed outcomes and their historical settings. The October 2026 revised scripts have not yet been executed in a fresh EVE-NG session. The CI check is intentionally conservative: it catches stale cables, missing policies and invalid source assertions, but it does not replace a network emulator or RouterOS parser.
 
-The next milestone is a complete rebuild and a filled acceptance report with raw outputs. Until then, the network is an emulation design with reviewed configuration sources.
+The next milestone is a complete rebuild and a filled acceptance report with raw outputs. Until then, the project is an **EVE-NG-tested original implementation** with a **statically reviewed but not yet live-retested update**.

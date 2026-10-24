@@ -1,5 +1,7 @@
 # Phase 08 — Router firewall and management access
 
+**Original EVE-NG test:** [HR-to-IT ping attempts timed out](../images/testing/firewall-test.png), while the [forward-chain rule counters](../images/phase-08/firewall-rule-validation.png) show packets matched a drop rule. The mirrored HQ-R2 policy and full negative-test matrix for the revised configuration have not yet been run.
+
 Both HQ routers now contain equivalent input and forward filters. The input policy first accepts established/related traffic and required control protocols, permits SSH from the IT/management address list, then drops the rest. The forward policy rejects invalid packets and unsolicited new WAN traffic.
 
 The specific lateral restrictions are:
@@ -24,4 +26,4 @@ Run positive and negative tests after import:
 
 Observe an incrementing drop counter when sending denied traffic. Repeat while HQ-R2 has taken over the VRRP VIP. IPv6 policy, OSPF authentication, and an application allowlist remain open design work.
 
-**Status:** Static policy review done; no live penetration or packet-capture evidence for this revision.
+**October 2026 revision status:** Earlier EVE-NG filtering was tested; updated dual-router policies received static review but no live retest.

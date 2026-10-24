@@ -1,6 +1,6 @@
 # RouterOS configuration set
 
-Eight RouterOS v7.21.4 import scripts correspond to the eight CHR routing/switching nodes in the EVE-NG lab. This directory is the configuration source of truth. The phase walkthroughs document the project history, but they are not substitutes for these scripts.
+The original enterprise network was **implemented and tested in EVE-NG**, with [screenshots of the actual exercises](../docs/EVE-NG-TEST-EVIDENCE.md). This directory now contains eight **revised** RouterOS v7.21.4 import scripts for the eight CHR devices. They are the source of truth **for the October 2026 revision**. Historical screenshots may show different router settings and are not substitutes for a new clean import.
 
 ## Import order
 
@@ -30,7 +30,7 @@ Transfer the matching file to each device first. Inspect import errors and `/log
 - Branch printer VLAN 120/220 and HQ printer VLAN 60 are reserved for future work, not deployed.
 - Firewall policy blocks HR→IT and branch-users→HQ management; the remaining internal flow policy is intentionally permissive until an application access matrix is defined.
 - Backup WAN addressing changes the NAT source IP after a full HQ-R1 failure. Established internet connections are not promised to survive.
-- RouterOS import and runtime verification remain **pending** until EVE-NG is available.
+- The **original EVE-NG tests were performed and documented**. RouterOS import and runtime re-verification for **these edited scripts** remain pending until EVE-NG is available.
 
 Run the repository's dependency-free static check with:
 

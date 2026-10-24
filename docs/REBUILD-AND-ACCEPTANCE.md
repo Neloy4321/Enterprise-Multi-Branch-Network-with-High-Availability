@@ -1,6 +1,6 @@
 # Rebuild and acceptance checklist
 
-**Status: pending live execution.** This is a test plan, not a completed test report. The October 2026 configuration revision was reviewed statically; the original EVE-NG instance is no longer available.
+**Original EVE-NG lab: implemented and tested.** The project includes screenshots of routing, DHCP, firewall filtering, VRRP takeover, SSH, Syslog and NTP. See [original test evidence](EVE-NG-TEST-EVIDENCE.md). **October 2026 revision: awaiting its own EVE-NG re-test.** The steps below apply to the updated configuration and are not a denial of the earlier successful tests.
 
 ## Preconditions
 
@@ -25,7 +25,7 @@ On each CHR:
 
 Inspect the `.unl` topology, especially HQ-R2 `ether4` and core-switch access port assignments. Run `python3 tools/lint_lab.py` in the repository first.
 
-**Pass:** No rejected import command; all expected interfaces up. **Current:** Not tested.
+**Pass:** No rejected import command; all expected interfaces up. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## 2. Layer 2 and DHCP
 
@@ -58,7 +58,7 @@ Endpoint expectations:
 
 Servers are statically addressed. VLANs 60, 120 and 220 are **not** deployed.
 
-**Pass:** Every configured endpoint maps to the intended VLAN and gateway. **Current:** Not tested.
+**Pass:** Every configured endpoint maps to the intended VLAN and gateway. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## 3. OSPF areas, neighbors and routes
 
@@ -74,7 +74,7 @@ On all four routers:
 
 Expect four WAN links using area 0 at both ends. Branch LANs are passive area 10/20 networks. HQ should learn `172.16.110.0/24` and `172.16.210.0/24`; branches should learn the HQ prefixes and, where WAN default routes exist, a default route.
 
-**Pass:** Each physical point-to-point adjacency is Full; expected routes are active; inter-site pings return. **Current:** Not tested.
+**Pass:** Each physical point-to-point adjacency is Full; expected routes are active; inter-site pings return. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## 4. Firewall and SSH
 
@@ -93,7 +93,7 @@ On routers:
 /ip service print
 ```
 
-Do not interpret a ping timeout by itself as proof of firewall enforcement; observe the corresponding drop counter. **Current:** Not tested.
+Do not interpret a ping timeout by itself as proof of firewall enforcement; observe the corresponding drop counter. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## 5. Internet path and NAT
 
@@ -107,7 +107,7 @@ On both HQ routers:
 
 Confirm separate DHCP-assigned WAN addresses and that a fresh flow from each HQ/branch VLAN can exit via the active path. A management cloud is a test Internet source, not equivalent to a redundant ISP.
 
-**Pass:** New client sessions work through each gateway in the appropriate failure scenario. **Current:** Not tested.
+**Pass:** New client sessions work through each gateway in the appropriate failure scenario. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## 6. VRRP and controlled failover
 
@@ -129,7 +129,7 @@ Expect HQ-R1 master (priority 150) and HQ-R2 backup (priority 100), all VIPs end
 
 **Important:** Different DHCP WAN addresses mean established NAT sessions may reset. A zero-loss or session-preserving failover is **not** part of the present design.
 
-**Pass:** Virtual gateway changes owner correctly and new flows recover within a measured, documented interval. **Current:** Not tested.
+**Pass:** Virtual gateway changes owner correctly and new flows recover within a measured, documented interval. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## 7. Syslog and NTP
 
@@ -146,13 +146,14 @@ Router commands:
 
 Generate a controlled warning event, verify it at the Linux collector, then check the clock offset against the Linux time server.
 
-**Pass:** Server-side Syslog entry includes a router identity and timestamp; NTP client shows synchronized status. **Current:** Not tested.
+**Pass:** Server-side Syslog entry includes a router identity and timestamp; NTP client shows synchronized status. **October 2026 revision:** Not rerun in EVE-NG; see the separately recorded original-lab results.
 
 ## Final approval record
 
 | Gate | State |
 | --- | --- |
-| Static topology/config consistency | Check with CI |
+| Original EVE-NG tests and screenshot archive | Available — [evidence register](EVE-NG-TEST-EVIDENCE.md) |
+| Static topology/config consistency of 2026 revision | CI check passed on the current PR |
 | Zero-error RouterOS imports | Pending |
 | L2/DHCP connectivity | Pending |
 | Multi-area OSPF neighbors/routes | Pending |
@@ -161,4 +162,4 @@ Generate a controlled warning event, verify it at the Linux collector, then chec
 | VRRP failover timing/packet loss | Pending |
 | Central Syslog and NTP evidence | Pending |
 
-Only after all rows pass may this version be described as **EVE-NG lab validated**. Production deployment would require additional physical hardware, provider link, monitoring, operations and security acceptance.
+The **original lab was tested in EVE-NG**; the rows above specify the additional proof needed before saying the **October 2026 edited configuration** was also tested. Production deployment would separately require physical hardware, upstream link diversity, monitoring, operations and security acceptance.

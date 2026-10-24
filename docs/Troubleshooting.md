@@ -1,11 +1,11 @@
-> **October 2026 revision note:** This guide is an archived troubleshooting reference. Some command examples refer to the earlier configuration. For current port maps, OSPF and VRRP expectations use [REBUILD-AND-ACCEPTANCE.md](REBUILD-AND-ACCEPTANCE.md) and [NETWORK-DECISIONS.md](NETWORK-DECISIONS.md). Runtime fixes should be recorded after the lab is rebuilt.
+> **Lab record and configuration note:** This troubleshooting guide grew out of an EVE-NG implementation that was actually tested; see [test screenshots](EVE-NG-TEST-EVIDENCE.md). Some examples describe the earlier running configuration, and the October 2026 revised scripts have not yet been retested. For current port maps, OSPF and VRRP settings, use [the acceptance checklist](REBUILD-AND-ACCEPTANCE.md) and [design decisions](NETWORK-DECISIONS.md).
 
 # 🛠️ Advanced Operations & Infrastructure Troubleshooting Guide
 
 ## 📌 Overview
 This engineering reference document provides a comprehensive operational diagnostic manual for the **Enterprise Multi-Branch Network with High Availability** infrastructure. It outlines common failures, state degradation warnings, policy drop mismatches, and protocol convergence issues that may arise during the lifecycle of the production environment. 
 
-Each issue cataloged in this matrix features explicit systemic symptoms, technical root-cause analyses, granular validation procedures, and production-ready **RouterOS v7** command mitigation strings to streamline incident management operations.
+Each issue cataloged in this matrix features explicit systemic symptoms, technical root-cause analyses, granular validation procedures, and RouterOS v7 diagnostic and recovery commands to streamline incident management operations.
 
 ---
 
@@ -167,7 +167,7 @@ To isolate and eliminate infrastructure failures efficiently without introducing
   ```routeros
   /interface vrrp print
   ```
-* **Recommended Solution Engine:** Audit the VRRP parameters on both devices to ensure the VRID values match perfectly across all sub-interfaces. Set the primary node priority value to **255** and the backup node value to **100** to guarantee clear election outcomes.
+* **Recommended Solution Engine:** Audit the VRRP parameters on both devices to ensure the VRID values match perfectly across all sub-interfaces. For the configured non-owner VRRP addresses, use primary priority **150** and backup priority **100**, with matching VRIDs, shared virtual addresses and healthy Layer-2 reachability. Priority 255 is reserved for an address owner, not this design.
 
 ---
 

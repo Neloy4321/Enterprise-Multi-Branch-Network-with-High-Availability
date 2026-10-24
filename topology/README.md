@@ -1,5 +1,7 @@
 # Topology sources
 
+The original network was [built and tested in EVE-NG](../docs/EVE-NG-TEST-EVIDENCE.md); this directory provides topology artifacts for reviewing and rebuilding that lab. The updated source drawings do not themselves represent a fresh test run.
+
 - `Enterprise-Network.png` is the earlier overview image.
 - `Enterprise-Network.drawio` is an editable, simplified architecture diagram reflecting the current HQ routers, dual WAN-to-branch links, core switches and shared EVE management cloud.
 - `../lab/Enterprise_Multi_Branch_Network.unl` is the authoritative **port-level** emulation cable map.

@@ -1,5 +1,7 @@
 # Phase 04 — Inter-VLAN routing
 
+**Original EVE-NG test:** The [inter-VLAN test screenshot](../images/phase-04/inter-vlan-connectivity-test.png) shows successful responses from hosts in three HQ subnets. The revised `.254` virtual-gateway settings have not been retested in EVE-NG.
+
 Headquarters uses router-on-a-stick on each HQ gateway's `ether1` trunk. Both routers attach VLAN interfaces 10, 20, 30, 40 and 50 with unique real IPs:
 
 - HQ-R1: `172.16.<VLAN>.1/24`
@@ -21,4 +23,4 @@ Check device addresses and packet paths:
 
 Then ping from HR to the permitted Sales/server destination, and from HR to IT to confirm it is blocked by policy. A failed ping may be a VLAN, route, host or firewall problem; check counters before assigning the cause.
 
-**Status:** Configuration reviewed; actual packet forwarding not rerun after the revision. Use [the acceptance checklist](REBUILD-AND-ACCEPTANCE.md).
+**October 2026 revision status:** Static configuration review complete. The original inter-VLAN test passed in EVE-NG, but the edited config has not been rerun. Use [the acceptance checklist](REBUILD-AND-ACCEPTANCE.md).
