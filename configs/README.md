@@ -30,6 +30,7 @@ Transfer the matching file to each device first. Inspect import errors and `/log
 - Branch printer VLAN 120/220 and HQ printer VLAN 60 are reserved for future work, not deployed.
 - Firewall policy blocks HR→IT and branch-users→HQ management; the remaining internal flow policy is intentionally permissive until an application access matrix is defined.
 - Backup WAN addressing changes the NAT source IP after a full HQ-R1 failure. Established internet connections are not promised to survive.
+- Remote Syslog includes `topics=info` on both HQ and branch routers, restoring informational events in addition to the existing warning/error categories. The original EVE-NG Syslog exercise is documented, but these updated rules still need live re-verification.
 - The **original EVE-NG tests were performed and documented**. RouterOS import and runtime re-verification for **these edited scripts** remain pending until EVE-NG is available.
 
 Run the repository's dependency-free static check with:
