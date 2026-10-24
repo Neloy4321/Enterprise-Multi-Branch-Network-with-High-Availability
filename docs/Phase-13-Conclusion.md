@@ -1,135 +1,31 @@
-# 🚀 Phase 13 – Production Validation, Comprehensive Testing & Project Conclusion
+# Phase 13 — Original EVE-NG test results and revision status
 
-## 📌 Objective
-The primary objective of this final phase was to execute a rigorous, end-to-end production validation of the completed enterprise multi-branch network infrastructure. By running systematic functional stress tests, auditing dynamic routing tables, verifying stateful security drop metrics, simulating instantaneous gateway failovers, and analyzing centralized log timestamp correlations, this phase certifies that the completed network fabric fully satisfies all baseline engineering requirements and is ready for real-world deployment.
+The multi-branch network was **built and tested in EVE-NG by the author**. The screenshots show working client communication, DHCP assignment, OSPF adjacency and learned routes, Internet connectivity, firewall enforcement examples, VRRP backup takeover and recovery, SSH access, and Syslog/NTP service exercises. This is a completed emulation project with historical evidence, not an untested proposal.
 
----
+![Original lab canvas](../images/phase-01/eve-ng-topology.png)
 
-## 🏗️ Integrated Enterprise Architecture Summary
+## Recorded EVE-NG outcomes
 
-The completed multi-site infrastructure successfully transitions abstract design requirements into a highly secure, resilient, and dynamically scaled corporate production environment. The following framework summarizes the cabled components and services active across the EVE-NG topology:
+- **VLANs and routing:** [client pings across HQ networks](../images/testing/vlan-verification.png), [OSPF Full neighbor](../images/phase-06/ospf-neighbor-verification.png) and [branch ping](../images/phase-13/enterprise-functional-testing.png).
+- **DHCP and Internet:** [bound DHCP leases](../images/phase-05/dhcp-lease-verification.png) and [successful Internet ICMP](../images/phase-07/internet-connectivity-test.png).
+- **Security:** [HR-to-IT traffic denied](../images/phase-08/traffic-filtering-verification.png), [firewall drop rule counters](../images/phase-08/firewall-rule-validation.png) and [SSH administration](../images/phase-10/ssh-login-verification.png).
+- **High availability:** [HQ-R1 initially Master](../images/phase-09/master-backup-status.png), [HQ-R2 takes over](../images/phase-09/vrrp-failover-test.png), [HQ-R1 recovers](../images/phase-09/vrrp-recovery-verification.png).
+- **Infrastructure services:** [Syslog packets and Linux collector](../images/phase-11/syslog-validation.png), [RouterOS NTP synchronized](../images/phase-12/time-synchronization-verification.png).
 
-| Architectural Layer | Provisioned Infrastructure Component | Engineering Deployment Role & Scope |
-| :--- | :--- | :--- |
-| **Type-2 Hypervisor Core** | VMware Workstation Pro (17.x) | Hardens the underlying nested virtualization engine platform. |
-| **Network Emulation Layer**| EVE-NG Community Edition (6.2.0-4) | Provides the physical canvas and QEMU node container stack. |
-| **Perimeter Routing Fabric**| MikroTik CHR Nodes (v7.21.4) | Runs core L3 lookup engines, OSPF stubs, and firewall filter chains. |
-| **Logical Broadcast Domain**| IEEE 802.1Q Bridge VLAN Filtering | Groups internal corporate zones into isolated `/24` subnets. |
-| **Centralized Automation** |中央 DHCP Scopes & Relays | Dynamic address lease parameters linked to VRRP targets. |
-| **Dynamic Path Engineering**| OSPFv2 Multi-Area Dynamic Routing | Directs Area 0 (Backbone), Area 10, and Area 20 transit paths. |
-| **Edge Security Translation**| Stateful Source NAT Masquerade | Consolidates outbound corporate traffic out of a unified edge link. |
-| **Control Plane Protection** | Stateful Firewall Filters & Zone ACLs | Blocks lateral cross-zone movement and locks down management ports. |
-| **Gateway Fault Tolerance** | VRRP Active/Standby Clusters | Shares a virtual gateway IP to handle core interface drops. |
-| **Management Hardening**   | Cryptographic SSHv2 Terminal Engine | Restricts configuration command access strictly to trusted IT zones. |
-| **Telemetry & Log Auditing**| Remote Syslog Aggregator Facility | Collects continuous operational system event streams on port 514. |
-| **Authority Time Sync**     | Centralized Network Time Protocol (NTP) | Locks all network system clocks to identical millisecond timestamps. |
+All 79 project images, evidence limits and version differences are indexed in [EVE-NG implementation and test evidence](EVE-NG-TEST-EVIDENCE.md). Not every network path or fault scenario is covered by those screenshots, and measured convergence timing/packet-loss results are not part of the saved record.
 
-### 📑 Documentation Evidence
-#### Figure 1. Fully Validated Enterprise Multi-Branch Network Canvas
-![Final Enterprise Network Topology](../images/phase-13/final-enterprise-topology.png)
-*The finalized production layout showing active links, multi-area OSPF stubs, and high-availability core routers.*
+## October 2026 engineering revision
 
----
+The `.unl` export and eight `.rsc` files have since been reconciled: Layer-2 port assignments, Area 0 WAN OSPF adjacency definitions, VRRP priorities and `/32` VIPs, dual HQ WAN/NAT paths, split DHCP pools, RouterOS management filters and service configuration paths were revised. The automated source checker has passed.
 
-## 🧪 Systematic Functional Testing & Verification Diagnostics
+**Only this newer configuration is pending fresh EVE-NG execution.** The original lab's screenshots include different gateway settings, a VRRP priority of 255 and a RouterOS 7.12 console capture. Therefore those results document the original build; they cannot be copied as if they came from the edited scripts.
 
-To certify production readiness, the infrastructure was subjected to comprehensive diagnostic testing across five core operational verification tracks:
+## Next verification
 
-### 1. Layer 2 Broadcast Isolation & Layer 3 Inter-VLAN Forwarding
-* **Diagnostic Test:** ICMP echo requests were sent from local department workstations across separate VLAN domains.
-* **Observed Metrics:** Switch bridge filtering rules successfully segmented Layer 2 broadcast domains, while the Router-on-a-Stick sub-interface setup handled line-rate cross-department routing without frame loss.
+1. Re-import all eight edited configs and confirm RouterOS accepts them.
+2. Confirm VLAN mapping, DHCP gateways, OSPF Full neighbors and branch routes under the new addresses.
+3. Repeat firewall positive/negative tests on both HQ routers.
+4. Repeat VRRP takeover and recovery, measuring lost packets, recovery time and new NAT sessions.
+5. Attach the Linux Syslog/NTP service VM missing from the exported `.unl` and retain new server-side evidence.
 
-### 2. OSPF Multi-Area Dynamic Convergence & Path Learning
-* **Diagnostic Test:** Link state neighbor database audits were pulled via the terminal, and physical links were dropped to test convergence.
-* **Observed Metrics:** `HQ-R1`, `HQ-R2`, `BR1-R1`, and `BR2-R1` maintained steady `Full` neighbor states. The Shortest Path First (SPF) engine dynamically learned remote subnets as OSPF (`DAo`) routes, recalculating alternate paths in under three seconds during simulated link failure states.
-
-### 3. Centralized Resource Provisioning & Edge NAT Translation
-* **Diagnostic Test:** Client workstations were booted across various subnets, and outbound traces were directed toward external internet locations.
-* **Observed Metrics:** Workstations smoothly executed DORA handshakes to pull proper dynamic parameters. Outbound internet traffic hit the stateful masquerade rule on `HQ-R1 ether4`, translating private RFC 1918 IPs into public addresses while protecting internal topology layouts.
-
-### 4. Zero-Trust Firewall Enforcement & Out-of-Band Management Hardening
-* **Diagnostic Test:** Lateral penetration scans and unauthorized SSH probes were sent from general user segments.
-* **Observed Metrics:** Firewall forward access chains immediately dropped restricted traffic (such as HR attempting to probe IT admin zones). Input chains successfully blocked SSH connection requests originating from outside the designated IT engineering subnets.
-
-### 5. High-Availability VRRP Failover Resiliency
-* **Diagnostic Test:** The master physical interface link on `HQ-R1` was intentionally shut down during an active user download stream.
-* **Observed Metrics:** `HQ-R2` missed consecutive VRRP heartbeats, updated its status from `backup` to `master`, and took over the virtual MAC mapping via a Gratuitous ARP update. User traffic transitioned seamlessly with zero session terminations or user drops.
-
----
-
-#### Figure 2. Integrated Automated Infrastructure Test Diagnostics
-![Enterprise Functional Testing](../images/phase-13/enterprise-functional-testing.png)
-*Console validation logs tracking successful automated address leases, routing table lookups, and failover states.*
-
----
-
-## 📦 Verified Project Deliverables Checklist
-
-| Phase Reference | Core Engineering Project Deliverable | Verification Status | Architectural Validation Notes |
-| :--- | :--- | :--- | :--- |
-| **Phase 00** | Stable VMware Pro & EVE-NG Server Sandboxing | ✅ Completed | Nested virtualization acceleration active; permission tables fixed. |
-| **Phase 01** | Deterministic Address Plan & Design Blueprints | ✅ Completed | Multi-area topologies and `/24` subnet matrices fully mapped. |
-| **Phase 02** | Physical Topology Assembly & Link Interconnections | ✅ Completed | Symmetrical node mappings and port cabling verified port-to-port. |
-| **Phase 03** | 802.1Q Bridge VLAN Filtering Deployed | ✅ Completed | Access ports PVID mapped; core inter-switch trunks configured. |
-| **Phase 04** | Router-on-a-Stick Layer 3 Inter-VLAN Setup | ✅ Completed | Virtual sub-interfaces successfully route cross-department transit. |
-| **Phase 05** | Centralized DHCP Server Scopes & relays | ✅ Completed | Automatically provisions IP configuration targeting the VRRP cluster. |
-| **Phase 06** | OSPF Multi-Area Dynamic Instance Routing | ✅ Completed | Neighbor states fully converged; dynamic stubs learned via Area 0/10/20. |
-| **Phase 07** | Stateful Border NAT Masquerade Egress | ✅ Completed | WAN internet access enabled out of unified gateway uplink interface. |
-| **Phase 08** | Stateful Firewall Filter Blocks & Zone ACLs | ✅ Completed | Inputs secured; lateral movements between restricted subnets blocked. |
-| **Phase 09** | Dual-Homed VRRP Master/Backup Cluster HA | ✅ Completed | Shared virtual gateway `.254` delivers sub-second automatic failover. |
-| **Phase 10** | Services Hardening & Secure SSHv2 Access | ✅ Completed | Plaintext telnet/web protocols disabled; strong modern crypto ciphers active. |
-| **Phase 11** | Remote Centralized Syslog Aggregator | ✅ Completed | Event triggers stream dynamically to datacenter host `172.16.40.201`. |
-| **Phase 12** | Centralized Network Time Protocol (NTP) Sync | ✅ Completed | System clocks synchronized cleanly to match global event timelines. |
-
----
-
-## 🛠️ Demonstrated Core Engineering Competencies
-
-Executing this complex infrastructure lifecycle showcases advanced proficiency across several networking domains:
-* **Advanced Enterprise Network Design:** Translating multi-site corporate expansion rules into scalable routing and switching frameworks.
-* **MikroTik RouterOS v7 Engineering:** Deploying complex instance configurations, advanced template parameters, and command line optimization.
-* **High Availability & Cluster Engineering:** Designing automatic, stateful gateway failover groups to protect critical corporate operations.
-* **Stateful Edge Security Hardening:** Implementing zero-trust boundary controls, custom access lists, and out-of-band management restrictions.
-* **Telemetry & Network Auditing Operations:** Hardening centralized logging backplanes and time synchronization tools for faster incident tracking.
-
----
-
-## 💡 Strategic Engineering Lessons Learned
-
-* **Deterministic Planning Mitigates Deploy Risk:** Matching third-octet values directly to VLAN IDs drastically cuts down down-time configuration adjustments.
-* **Dynamic Protocols Reduce Overhead:** Transitioning from static routes to multi-area OSPF stubs automates table updates and scales easily.
-* **High Availability Is Vital for Business Continuity:** Deploying redundant gateway pairs like VRRP shields users from core failures and prevents data loss.
-* **Zoned Firewalls are Imperative:** Enforcing strict zero-trust rules right at the internal gateway layer stops compromised endpoints from moving laterally.
-* **Telemetry and Clock Sync Speed Up Audits:** Centralized logging with uniform timestamps makes tracking down cascading errors much faster.
-
----
-
-## 🔮 Future Infrastructure Engineering Roadmap
-
-While the completed environment achieves all its target goals, the architecture can be expanded with several next-generation features:
-* **Centralized AAA Authentication Infrastructure:** Deploying RADIUS/TACACS+ servers to manage user accounts and control administrative changes centrally.
-* **Dual-Homed Edge Multi-Provider WAN BGP:** Connecting to multiple internet providers using dynamic BGP routing to prevent perimeter uplink failures.
-* **Encrypted Inter-Site Transport Overlays:** Setting up secure IPsec VPN tunnels or WireGuard meshes to protect corporate data moving across public networks.
-* **Network Automation & Infrastructure as Code (IaC):** Automating device configuration updates across branches using Ansible playbooks or Netmiko Python scripts.
-* **Advanced Enterprise Monitoring Dashboards:** Integrating deep network monitoring utilities like Zabbix or MikroTik The Dude to track device performance and traffic analytics.
-
----
-
-## 🎯 Final Project Operational Validation Status
-
-* **Enterprise Network Requirements Defined:** ✅ Passed
-* **Hierarchical Infrastructure Layer Virtualized:** ✅ Passed
-* **VLAN Segments and Local Gateways Operational:** ✅ Passed
-* **Multi-Area OSPF Dynamic Routes Exchanged:** ✅ Passed
-* **Stateful Firewall Chains and Egress NAT Verified:** ✅ Passed
-* **High-Availability Gateway Cluster Validated:** ✅ Passed
-* **Central Logging and NTP Services Synchronized:** ✅ Passed
-* **End-to-End Core Network Fully Ready for Production:** 💎 **CRITICAL CAPABILITY GATES VERIFIED SECURE**
-
----
-
-## 📌 Technical Conclusion
-The **Enterprise Multi-Branch Network with High Availability** project has successfully achieved all architecture design objectives. By integrating advanced Layer 2 segmentation, dynamic multi-area OSPF routing, stateful firewall configurations, automated resource management, redundant VRRP gateways, and centralized monitoring tools into a single, cohesive framework, the environment delivers a highly scalable, secure, and resilient corporate infrastructure. 
-
-Every testing phase was thoroughly validated using systematic console diagnostics, proving that the network converges rapidly, maintains secure zoning boundaries, and switches traffic smoothly during link failures to guarantee business continuity. The resulting production-ready environment serves as a complete portfolio case study, demonstrating rigorous, real-world network engineering practices and system administration concepts using modern MikroTik RouterOS v7 architectures.
-```
+That is the distinction used throughout the repository: **tested original EVE-NG implementation; revised configuration awaiting re-test.** Neither the original screenshots nor the static checker alone establish a production deployment or a zero-loss availability SLA.

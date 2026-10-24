@@ -379,6 +379,7 @@ The project is considered complete only when:
         <interface id="0" name="eth1" type="ethernet" network_id="2"/>
         <interface id="1" name="eth2" type="ethernet" network_id="8"/>
         <interface id="2" name="eth3" type="ethernet" network_id="9"/>
+        <interface id="3" name="eth4" type="ethernet" network_id="21"/>
       </node>
       <node id="3" name="CORE-SW1" type="qemu" template="mikrotik" image="mikrotik-chr-7.21.4" console="telnet" cpu="1" cpulimit="0" ram="256" ethernet="12" uuid="d181a7cf-6bbc-4f49-926f-038d7e9c8345" qemu_options="-machine type=pc,accel=kvm -serial mon:stdio -nographic -no-user-config -nodefaults -display none -vga std -rtc base=utc" qemu_version="2.12.0" qemu_arch="x86_64" qemu_nic="e1000-82545em" delay="0" icon="Switch.png" config="0" left="702" top="345">
         <interface id="0" name="eth1" type="ethernet" network_id="1"/>

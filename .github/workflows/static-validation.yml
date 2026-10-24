@@ -1,0 +1,17 @@
+name: Static network source checks
+
+on:
+  push:
+    branches: [main, fix/enterprise-network-audit]
+  pull_request:
+
+jobs:
+  validate-source:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate topology and configuration references
+        run: python3 tools/lint_lab.py
