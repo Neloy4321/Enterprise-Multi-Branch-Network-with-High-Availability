@@ -156,7 +156,13 @@ for link in re.findall(r"\]\(([^)]+)\)", readme):
         check((ROOT / path).exists(), f"Broken README link: {link}")
 
 check((ROOT / "LICENSE").stat().st_size > 300, "Incomplete LICENSE")
-check("PENDING" in (ROOT / "docs/Testing-and-Validation.md").read_text(), "Live tests improperly marked as passed")
+validation = (ROOT / "docs/Testing-and-Validation.md").read_text(encoding="utf-8")
+evidence = ROOT / "docs/EVE-NG-TEST-EVIDENCE.md"
+check(evidence.exists(), "Missing original EVE-NG test evidence register")
+check(
+    "Original EVE-NG" in validation and "not rerun" in validation.lower(),
+    "Validation must distinguish original EVE-NG tests from the revised build",
+)
 
 if errors:
     print(f"Static check FAILED: {len(errors)} issue(s)")
@@ -166,4 +172,4 @@ if errors:
 
 print(f"Static check PASS: {len(nodes)} nodes, {len(expected_clients)} endpoint ports, "
       f"{len(transits)} WAN links and router policy assumptions match the sources.")
-print("Reminder: RouterOS import, reachability and failover remain untested.")
+print("Reminder: original EVE-NG testing is documented; revised RouterOS imports and failover still need a live retest.")
