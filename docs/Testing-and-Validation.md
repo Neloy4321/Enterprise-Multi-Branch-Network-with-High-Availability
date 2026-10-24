@@ -2,6 +2,8 @@
 
 > **Original implementation — tested in EVE-NG:** This is the author's comprehensive historical test walkthrough. The included **PASS results refer to that original lab session**, not the edited October 2026 `.rsc`/`.unl` files. The [screenshot evidence register](EVE-NG-TEST-EVIDENCE.md) distinguishes directly visible outputs from wider author-reported outcomes.
 >
+> **Original EVE-NG testing:** completed during the author's lab implementation. **October 2026 revised configuration:** not rerun in EVE-NG.
+>
 > **Measurement boundary:** Original screenshots show VRRP takeover/recovery and successful routing/service exercises, but do not establish a 3-second convergence threshold, zero packet loss, NAT session preservation or production SLA. The revised source requires new RouterOS tests.
 
 ## 📌 Overview
