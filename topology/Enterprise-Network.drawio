@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-10-24T00:00:00.000Z" agent="draw.io" version="24.7.17">
+  <diagram name="Network overview" id="enterprise-network">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="750" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="v0" value="HQ-R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="250" y="210" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v1" value="HQ-R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="620" y="210" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v2" value="CORE-SW1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="250" y="410" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v3" value="CORE-SW2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="620" y="410" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v4" value="BR1-R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="55" y="55" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v5" value="BR2-R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="815" y="55" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v6" value="BR1-SW1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="55" y="160" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v7" value="BR2-SW1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="815" y="160" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v8" value="ISP / pnet0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="435" y="55" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v9" value="HR + Sales" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="250" y="565" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v10" value="IT + Admin + Servers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="620" y="565" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v11" value="BR1 clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="55" y="265" width="150" height="50" as="geometry"/></mxCell>
+<mxCell id="v12" value="BR2 clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#64748b;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="815" y="265" width="150" height="50" as="geometry"/></mxCell>
+        <mxCell id="e0" value="trunk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v0" target="v2"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e1" value="trunk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v1" target="v3"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="L2 trunk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v2" target="v3"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="10.0.1.0/30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v4" target="v0"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="10.0.3.0/30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v4" target="v1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="10.0.2.0/30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v5" target="v0"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" value="10.0.4.0/30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v5" target="v1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e7" value="LAN" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v4" target="v6"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" value="LAN" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v5" target="v7"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" value="VLAN 110" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v6" target="v11"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e10" value="VLAN 210" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v7" target="v12"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e11" value="WAN DHCP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v0" target="v8"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e12" value="WAN DHCP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v1" target="v8"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e13" value="VLAN 10/20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v2" target="v9"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e14" value="VLAN 30/40/50" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=none;strokeColor=#64748b;fontSize=10;" edge="1" parent="1" source="v3" target="v10"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

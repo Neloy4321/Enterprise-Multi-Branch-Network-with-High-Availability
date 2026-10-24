@@ -1,3 +1,5 @@
+> **October 2026 revision note:** This guide is an archived troubleshooting reference. Some command examples refer to the earlier configuration. For current port maps, OSPF and VRRP expectations use [REBUILD-AND-ACCEPTANCE.md](REBUILD-AND-ACCEPTANCE.md) and [NETWORK-DECISIONS.md](NETWORK-DECISIONS.md). Runtime fixes should be recorded after the lab is rebuilt.
+
 # 🛠️ Advanced Operations & Infrastructure Troubleshooting Guide
 
 ## 📌 Overview

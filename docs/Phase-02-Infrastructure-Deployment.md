@@ -1,3 +1,5 @@
+> **October 2026 revision note:** This page is retained from the original lab build. Its screenshots and sample command output are historical; they are not the acceptance result for the revised `configs/*.rsc` files. Use [the current test checklist](REBUILD-AND-ACCEPTANCE.md) and [design decisions](NETWORK-DECISIONS.md) for source-level expectations.
+
 # 🚀 Phase 02 – Infrastructure Deployment & Topology Composition
 
 ## 📌 Objective
@@ -7,9 +9,9 @@ The primary objective of this phase was to systematically instantiate the raw ph
 
 ## 🏗️ Infrastructure Deployment Matrix
 
-Following the design parameters approved in the planning phase, the enterprise architecture was mapped onto the EVE-NG canvas workspace[cite: 1, 2]. Devices were organized into distinct geographical zones (Corporate Headquarters, Branch-1, and Branch-2) to ensure structural readability and ease long-term troubleshooting[cite: 1].
+Following the design parameters approved in the planning phase, the enterprise architecture was mapped onto the EVE-NG canvas workspace[cite: 1, 2]. Devices were organized into distinct geographical zones (Corporate Headquarters, Branch-1, and Branch-2) to ensure structural readability and ease long-term troubleshooting.
 
-No networking services, IP assignments, or firewall policies were active during this deployment window; the focus was purely on establishing the underlying hardware matrix[cite: 1].
+No networking services, IP assignments, or firewall policies were active during this deployment window; the focus was purely on establishing the underlying hardware matrix.
 
 ### 📑 Documentation Evidence
 
@@ -21,14 +23,14 @@ No networking services, IP assignments, or firewall policies were active during 
 
 ## 🎛️ Computing & Routing Node Ingestion
 
-The core routing layer comprises four MikroTik Cloud Hosted Router (CHR) virtual instances operating on standard QEMU templates[cite: 1, 2]. These instances provide the raw processing capacity needed for multi-area OSPF routing, stateful packet inspection, and active gateway failovers[cite: 1].
+The core routing layer comprises four MikroTik Cloud Hosted Router (CHR) virtual instances operating on standard QEMU templates[cite: 1, 2]. These instances provide the raw processing capacity needed for multi-area OSPF routing, stateful packet inspection, and active gateway failovers.
 
 | Node Hostname | Image Template | Resource Profile | Deployment Role & Objective |
 | :--- | :--- | :--- | :--- |
-| **HQ-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Primary HQ Border Gateway / VRRP Master Router / NAT Egress Edge[cite: 1]. |
-| **HQ-R2** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Redundant HQ Core Gateway / VRRP Backup Router / Dynamic OSPF Anchor[cite: 1]. |
-| **BR1-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Branch-1 Perimeter Boundary Gateway Node (OSPF Area 10)[cite: 1]. |
-| **BR2-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Branch-2 Perimeter Boundary Gateway Node (OSPF Area 20)[cite: 1]. |
+| **HQ-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Primary HQ Border Gateway / VRRP Master Router / NAT Egress Edge. |
+| **HQ-R2** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Redundant HQ Core Gateway / VRRP Backup Router / Dynamic OSPF Anchor. |
+| **BR1-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Branch-1 Perimeter Boundary Gateway Node (OSPF Area 10). |
+| **BR2-R1** | `mikrotik-chr-7.21.4` | 1 vCPU / 256 MB[cite: 2] | Branch-2 Perimeter Boundary Gateway Node (OSPF Area 20). |
 
 ### 📑 Documentation Evidence
 
@@ -100,10 +102,10 @@ Cabling layouts were executed using an exact port-to-port mapping scheme to prev
 
 ## 🔍 Post-Deployment Infrastructure Audit
 
-Before finalizing this deployment stage, a strict configuration check was performed to confirm hypervisor stability and topology alignment[cite: 1]:
-* Verified all four core routing engines booted cleanly without kernel faults[cite: 1].
+Before finalizing this deployment stage, a strict configuration check was performed to confirm hypervisor stability and topology alignment:
+* Verified all four core routing engines booted cleanly without kernel faults.
 * Confirmed that all access layer links reported active statuses with zero interface drops[cite: 2].
-* Audited all physical ports against the master design spec to ensure absolute interface symmetry[cite: 1].
+* Audited all physical ports against the master design spec to ensure absolute interface symmetry.
 
 ### 📑 Documentation Evidence
 
@@ -117,7 +119,7 @@ Before finalizing this deployment stage, a strict configuration check was perfor
 
 | Target Verification Control Item | Current Status | Structural Notes |
 | :--- | :--- | :--- |
-| **Global Topology Schema Instantiated** | ✅ Validated | Visual node coordinates mapped correctly onto the canvas[cite: 1]. |
+| **Global Topology Schema Instantiated** | ✅ Validated | Visual node coordinates mapped correctly onto the canvas. |
 | **HQ Redundant Routing Pair Deployed** | ✅ Validated | `HQ-R1` and `HQ-R2` CHR templates running stable metrics[cite: 1, 2]. |
 | **Branch Boundary Engines Provisioned** | ✅ Validated | `BR1-R1` and `BR2-R1` boundary systems active[cite: 1, 2]. |
 | **Switching Fabric Layers Positioned** | ✅ Validated | Core and access switches provisioned for bridge filtering[cite: 1, 2]. |
@@ -128,5 +130,5 @@ Before finalizing this deployment stage, a strict configuration check was perfor
 ---
 
 ## 🎯 Phase Outcome
-Phase 02 has successfully reached its structural objectives[cite: 1]. The raw enterprise multi-branch network environment is now completely assembled and validated inside EVE-NG[cite: 1, 2]. All computing engines, core switches, and client endhosts are properly cabled and showing healthy power states[cite: 1, 2]. The virtual testbed has passed all physical readiness checks and is fully prepared for Phase 03, where we will build the Layer 2 bridge VLAN segmentation structures[cite: 1].
+Phase 02 has successfully reached its structural objectives. The raw enterprise multi-branch network environment is now completely assembled and validated inside EVE-NG[cite: 1, 2]. All computing engines, core switches, and client endhosts are properly cabled and showing healthy power states[cite: 1, 2]. The virtual testbed has passed all physical readiness checks and is fully prepared for Phase 03, where we will build the Layer 2 bridge VLAN segmentation structures.
 ```
